@@ -50,8 +50,8 @@
                         침투테스트 전문가
                     </h1>
                     <p class="lead text-white-75 mb-4">
-                        갓루트(GOTROOT) 선임컨설턴트로 재직 중이며, 모의해킹, 인프라 진단, 
-                        취약점 분석 등 실전 사이버보안 업무를 전문으로 합니다.
+                        갓루트(GOTROOT) 선임컨설턴트로 재직 중이며, 모의해킹 및 인프라 진단 분야에서 
+                        5년 이상의 실무 경험을 보유하고 있습니다.
                     </p>
                     <div class="d-flex gap-3">
                         <a href="#projects" class="btn btn-primary btn-lg">
@@ -78,9 +78,9 @@
                 <div class="col-lg-8 mx-auto text-center">
                     <h2 class="section-title mb-4">About Me</h2>
                     <p class="lead mb-4">
-                        2019년부터 정보보안 분야에서 활동하며, 현재 갓루트(GOTROOT)에서 선임컨설턴트/레드팀으로 
-                        재직 중입니다. 모의해킹, 인프라 진단, 취약점 분석 등 실전 보안 업무를 전문으로 하며, 
-                        금융·통신·게임·원자력 등 다양한 업종에서 프로젝트를 성공적으로 수행해왔습니다.
+                        2019년부터 정보보안 분야에서 꾸준히 경험을 쌓아왔으며, 현재 갓루트(GOTROOT)에서 
+                        선임컨설턴트/레드팀으로 재직 중입니다. 금융, 통신, 게임, 헬스케어, 원자력 등 
+                        다양한 업종에서 모의해킹과 인프라 진단 프로젝트를 성공적으로 수행한 경험이 있습니다.
                     </p>
                 </div>
             </div>
@@ -99,7 +99,7 @@
                         <div class="card-body text-center">
                             <i class="bi bi-graph-up display-4 text-success mb-3"></i>
                             <h5 class="card-title">주요 성과</h5>
-                            <p class="card-text">5년+ 실전 경험, 20+ 기업 모의해킹/인프라진단, PL 다수 경험</p>
+                            <p class="card-text">5년+ 실무 경험, 20+ 기업 모의해킹/인프라진단, 다수 PL 경험 보유</p>
                         </div>
                     </div>
                 </div>
@@ -159,14 +159,14 @@
                                     <td class="fw-bold">통신사 K사 개인정보보호법 컴플라이언스 진단</td>
                                     <td>2024.01 - 현재</td>
                                     <td>
-                                        <span class="badge bg-success text-white">🏢 현재진행</span>
+                                        <span class="badge bg-success text-white">🏢 진행중</span>
                                         <span class="badge bg-info">컴플라이언스</span>
                                     </td>
                                     <td>KT계열사 앱/웹/IoT 서비스 개인정보보호법 적합성 진단</td>
                                     <td><span class="badge bg-warning">진행중</span></td>
                                     <td>
-                                        <button class="btn btn-sm btn-outline-secondary" disabled title="현재 진행중">
-                                            <i class="bi bi-lock"></i>
+                                        <button class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="kt-current" title="진행중 프로젝트">
+                                            <i class="bi bi-eye-fill"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -185,6 +185,21 @@
                                         </button>
                                     </td>
                                 </tr>
+                                <tr class="project-row" data-category="pentest">
+                                    <td class="fw-bold">공공기관 K사 웹 취약점 점검</td>
+                                    <td>2023.04 - 2023.05</td>
+                                    <td>
+                                        <span class="badge bg-danger text-white">🎯 모의해킹</span>
+                                        <span class="badge bg-warning text-dark">공공</span>
+                                    </td>
+                                    <td>웹모의해킹 진단 PL 업무</td>
+                                    <td><span class="badge bg-success">완료</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="public-k">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
                                 <tr class="project-row" data-category="infra">
                                     <td class="fw-bold">은행 I사 인프라 취약점 진단 및 웹모의해킹</td>
                                     <td>2023.02</td>
@@ -196,6 +211,36 @@
                                     <td><span class="badge bg-success">완료</span></td>
                                     <td>
                                         <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="bank-i">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="project-row" data-category="pentest">
+                                    <td class="fw-bold">화장품 C사 모의침투 및 웹 점검</td>
+                                    <td>2022.12</td>
+                                    <td>
+                                        <span class="badge bg-danger text-white">🎯 침투테스트</span>
+                                        <span class="badge bg-secondary">화장품</span>
+                                    </td>
+                                    <td>외부자 관점 모의침투 진단 및 웹 모의해킹</td>
+                                    <td><span class="badge bg-success">완료</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="cosmetic-c">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="project-row" data-category="infra">
+                                    <td class="fw-bold">보험 H사 취약점 분석 평가</td>
+                                    <td>2022.10 - 2022.11</td>
+                                    <td>
+                                        <span class="badge bg-info text-white">🏦 금융</span>
+                                        <span class="badge bg-primary">PL</span>
+                                    </td>
+                                    <td>전자금융기반시설 기준 인프라 진단 및 웹/앱 모의해킹</td>
+                                    <td><span class="badge bg-success">완료</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="insurance-h2">
                                             <i class="bi bi-eye"></i>
                                         </button>
                                     </td>
@@ -245,6 +290,51 @@
                                         </button>
                                     </td>
                                 </tr>
+                                <tr class="project-row" data-category="pentest">
+                                    <td class="fw-bold">화장품 L사 마트브랜드 웹/CS 모의해킹</td>
+                                    <td>2020.09 - 2020.10</td>
+                                    <td>
+                                        <span class="badge bg-danger text-white">🎯 모의해킹</span>
+                                        <span class="badge bg-secondary">화장품</span>
+                                    </td>
+                                    <td>OWASP Top 10 기반 웹 모의해킹, XSS Stored 등 취약점 도출</td>
+                                    <td><span class="badge bg-success">완료</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="cosmetic-l">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="project-row" data-category="iot">
+                                    <td class="fw-bold">게임 C사 모바일 앱 취약점 진단</td>
+                                    <td>2020.03 - 2020.05</td>
+                                    <td>
+                                        <span class="badge bg-purple text-white">📱 모바일</span>
+                                        <span class="badge bg-success">게임</span>
+                                    </td>
+                                    <td>KISA 모바일 대민서비스 보안취약점 점검, 자체 도구 개발</td>
+                                    <td><span class="badge bg-success">완료</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="game-c">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="project-row" data-category="infra">
+                                    <td class="fw-bold">금융 I사 뉴욕지점 보안취약점 점검</td>
+                                    <td>2019.10 - 2019.12</td>
+                                    <td>
+                                        <span class="badge bg-info text-white">🏦 금융</span>
+                                        <span class="badge bg-warning text-dark">해외</span>
+                                    </td>
+                                    <td>전자금융기반 및 KISA 주통기 기반 대량 점검</td>
+                                    <td><span class="badge bg-success">완료</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="finance-i">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -252,11 +342,11 @@
                     <!-- 더 많은 프로젝트 보기 버튼 -->
                     <div class="text-center mt-4">
                         <button class="btn btn-outline-primary btn-lg" id="showMoreProjects">
-                            <i class="bi bi-plus-circle"></i> 더 많은 프로젝트 보기 (20+ 전체)
+                            <i class="bi bi-plus-circle"></i> 전체 프로젝트 이력 보기
                         </button>
                         <p class="text-muted mt-2 small">
-                            <strong>주요 클라이언트:</strong> 갓루트, LG전자, 한국수력원자력, 라스컴, 에스오티글로벌, 
-                            각종 금융/통신/게임/헬스케어 기업, 공공기관 등
+                            <strong>경험 분야:</strong> 금융권, 통신사, 게임, 헬스케어, 원자력, 공공기관, 
+                            모의해킹, 인프라진단, 클라우드보안, IoT보안, 모바일앱진단 등
                         </p>
                     </div>
                 </div>
@@ -284,11 +374,11 @@
                                     <p class="text-muted mb-0">갓루트(GOTROOT) 선임컨설턴트/레드팀</p>
                                 </div>
                                 <div class="timeline-body">
-                                    <p>국내 최고 보안회사에서 레드팀으로 활동 중</p>
+                                    <p>국내 최고 수준의 보안 전문회사에서 레드팀 구성원으로 활동 중</p>
                                     <ul class="list-unstyled">
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 통신사 K사 개인정보보호법 컴플라이언스 진단 진행 중</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> 통신사 K사 개인정보보호법 컴플라이언스 진단 수행 중</li>
                                         <li><i class="bi bi-check-circle-fill text-success"></i> KT계열사 앱/웹/IoT 서비스 보안 점검</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 레드팀 활동 및 고급 침투테스트</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> 레드팀 활동 및 고급 침투테스트 업무</li>
                                     </ul>
                                 </div>
                             </div>
@@ -303,11 +393,11 @@
                                     <p class="text-muted mb-0">프리랜서 & 라스컴 선임컨설턴트</p>
                                 </div>
                                 <div class="timeline-body">
-                                    <p>다양한 보안 프로젝트 PL 역할 수행 및 전문성 확장</p>
+                                    <p>다양한 보안 프로젝트에서 프로젝트 리더(PL) 역할을 담당하며 전문성을 확장</p>
                                     <ul class="list-unstyled">
                                         <li><i class="bi bi-check-circle-fill text-success"></i> 보험사 H사 웹모의해킹 및 모바일앱 진단 PL</li>
                                         <li><i class="bi bi-check-circle-fill text-success"></i> 은행 I사 클라우드 인프라 진단</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 다수 기업 모의해킹 및 인프라 진단 프로젝트</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> 다수 기업 모의해킹 및 인프라 진단 프로젝트 수행</li>
                                         <li><i class="bi bi-check-circle-fill text-success"></i> 프로젝트 리더(PL) 역할 전문화</li>
                                     </ul>
                                 </div>
@@ -323,12 +413,12 @@
                                     <p class="text-muted mb-0">에스오티글로벌 컨설턴트</p>
                                 </div>
                                 <div class="timeline-body">
-                                    <p>대기업 및 특수 분야 보안 프로젝트 집중 수행</p>
+                                    <p>대기업 및 국가 핵심 인프라 보안 프로젝트에서 풍부한 경험을 축적</p>
                                     <ul class="list-unstyled">
                                         <li><i class="bi bi-check-circle-fill text-success"></i> LG전자 AWS 클라우드 인프라 1년 8개월 장기 프로젝트</li>
                                         <li><i class="bi bi-check-circle-fill text-success"></i> 한국수력원자력 물리보안 및 IAEA 가이드 적용</li>
                                         <li><i class="bi bi-check-circle-fill text-success"></i> 헬스케어 IoT 의료기기 보안 진단</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 금융/통신/게임 등 다양한 업종 경험</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> 금융/통신/게임 등 다양한 업종에서 경험 축적</li>
                                     </ul>
                                 </div>
                             </div>
@@ -343,7 +433,7 @@
                                     <p class="text-muted mb-0">로한아이티 사원 - 정보보안 커리어 시작</p>
                                 </div>
                                 <div class="timeline-body">
-                                    <p>정보보안 분야 첫 커리어, 기초 실무 경험 축적</p>
+                                    <p>정보보안 분야에서의 첫 커리어를 시작하며 기초 실무 역량을 구축</p>
                                     <ul class="list-unstyled">
                                         <li><i class="bi bi-check-circle-fill text-success"></i> 금융 I사 뉴욕지점 보안취약점 점검</li>
                                         <li><i class="bi bi-check-circle-fill text-success"></i> 공사 B사 주요통신기반시설 취약점 점검</li>
@@ -365,7 +455,7 @@
             <div class="row">
                 <div class="col-lg-8 mx-auto text-center">
                     <h2 class="section-title mb-4">연락처</h2>
-                    <p class="lead mb-5">채용이나 협업 기회가 있으시면 언제든 연락해 주세요.</p>
+                    <p class="lead mb-5">새로운 기회나 협업에 관심이 있으시면 언제든 연락 부탁드립니다.</p>
                     
                     <div class="row">
                         <div class="col-md-4 mb-4">
