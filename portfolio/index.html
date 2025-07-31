@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>정보보안 전문가 포트폴리오 | InfoSec Professional</title>
+    <title>침투테스트 전문가 포트폴리오 | PenTest Professional</title>
     
     <!-- Bootstrap 5 CSS CDN -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#home">
-                <i class="bi bi-shield-check"></i> InfoSec Portfolio
+                <i class="bi bi-shield-check"></i> PenTest Portfolio
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -47,11 +47,11 @@
             <div class="row align-items-center min-vh-100">
                 <div class="col-lg-6">
                     <h1 class="display-4 fw-bold text-white mb-4">
-                        정보보안 전문가
+                        침투테스트 전문가
                     </h1>
                     <p class="lead text-white-75 mb-4">
-                        ISMS 인증, AWS 보안, 취약점 점검 등 
-                        다양한 정보보안 프로젝트 경험을 보유하고 있습니다.
+                        갓루트(GOTROOT) 선임컨설턴트로 재직 중이며, 모의해킹, 인프라 진단, 
+                        취약점 분석 등 실전 사이버보안 업무를 전문으로 합니다.
                     </p>
                     <div class="d-flex gap-3">
                         <a href="#projects" class="btn btn-primary btn-lg">
@@ -78,8 +78,9 @@
                 <div class="col-lg-8 mx-auto text-center">
                     <h2 class="section-title mb-4">About Me</h2>
                     <p class="lead mb-4">
-                        10년 이상의 정보보안 분야 경험을 바탕으로 기업의 보안 수준 향상에 
-                        기여할 수 있는 정보보안 전문가입니다.
+                        2019년부터 정보보안 분야에서 활동하며, 현재 갓루트(GOTROOT)에서 선임컨설턴트/레드팀으로 
+                        재직 중입니다. 모의해킹, 인프라 진단, 취약점 분석 등 실전 보안 업무를 전문으로 하며, 
+                        금융·통신·게임·원자력 등 다양한 업종에서 프로젝트를 성공적으로 수행해왔습니다.
                     </p>
                 </div>
             </div>
@@ -88,8 +89,8 @@
                     <div class="card h-100 border-0 shadow-sm">
                         <div class="card-body text-center">
                             <i class="bi bi-award display-4 text-primary mb-3"></i>
-                            <h5 class="card-title">인증 & 자격</h5>
-                            <p class="card-text">CISSP, CISA, AWS 보안 전문가 등 다수의 보안 관련 인증 보유</p>
+                            <h5 class="card-title">현재 소속</h5>
+                            <p class="card-text">갓루트(GOTROOT) 선임컨설턴트/레드팀 재직 중 (2024.01~현재)</p>
                         </div>
                     </div>
                 </div>
@@ -98,7 +99,7 @@
                         <div class="card-body text-center">
                             <i class="bi bi-graph-up display-4 text-success mb-3"></i>
                             <h5 class="card-title">주요 성과</h5>
-                            <p class="card-text">50+ 기업 보안 프로젝트 참여, ISMS 인증 100% 성공률 달성</p>
+                            <p class="card-text">5년+ 실전 경험, 20+ 기업 모의해킹/인프라진단, PL 다수 경험</p>
                         </div>
                     </div>
                 </div>
@@ -107,7 +108,7 @@
                         <div class="card-body text-center">
                             <i class="bi bi-people display-4 text-info mb-3"></i>
                             <h5 class="card-title">전문 분야</h5>
-                            <p class="card-text">ISMS, 클라우드 보안, 취약점 점검, 보안 교육</p>
+                            <p class="card-text">모의해킹, 인프라진단, 취약점분석, 클라우드보안, IoT보안, 모바일앱진단</p>
                         </div>
                     </div>
                 </div>
@@ -129,9 +130,11 @@
                 <div class="col-12 text-center">
                     <div class="btn-group" role="group">
                         <button type="button" class="btn btn-outline-primary active" data-filter="all">전체</button>
-                        <button type="button" class="btn btn-outline-primary" data-filter="isms">ISMS</button>
-                        <button type="button" class="btn btn-outline-primary" data-filter="aws">AWS</button>
-                        <button type="button" class="btn btn-outline-primary" data-filter="vuln">취약점점검</button>
+                        <button type="button" class="btn btn-outline-primary" data-filter="pentest">모의해킹</button>
+                        <button type="button" class="btn btn-outline-primary" data-filter="infra">인프라진단</button>
+                        <button type="button" class="btn btn-outline-primary" data-filter="cloud">클라우드</button>
+                        <button type="button" class="btn btn-outline-primary" data-filter="iot">IoT/모바일</button>
+                        <button type="button" class="btn btn-outline-primary" data-filter="current">현재진행</button>
                     </div>
                 </div>
             </div>
@@ -152,83 +155,109 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="project-row" data-category="isms">
-                                    <td class="fw-bold">A그룹 ISMS 인증 컨설팅</td>
-                                    <td>2024.01 - 2024.06</td>
+                                <tr class="project-row" data-category="current">
+                                    <td class="fw-bold">통신사 K사 개인정보보호법 컴플라이언스 진단</td>
+                                    <td>2024.01 - 현재</td>
                                     <td>
-                                        <span class="badge bg-warning text-dark">🟨 ISMS</span>
-                                        <span class="badge bg-secondary">컨설팅</span>
+                                        <span class="badge bg-success text-white">🏢 현재진행</span>
+                                        <span class="badge bg-info">컴플라이언스</span>
                                     </td>
-                                    <td>대기업 ISMS 인증 획득 지원</td>
-                                    <td><span class="badge bg-success">완료</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="isms-a">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="project-row" data-category="aws">
-                                    <td class="fw-bold">B회사 AWS 보안 강화</td>
-                                    <td>2023.09 - 2023.12</td>
-                                    <td>
-                                        <span class="badge bg-primary">🟦 AWS</span>
-                                        <span class="badge bg-info">클라우드</span>
-                                    </td>
-                                    <td>AWS 인프라 보안 설정 및 모니터링 구축</td>
-                                    <td><span class="badge bg-success">완료</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="aws-b">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="project-row" data-category="vuln">
-                                    <td class="fw-bold">C기업 웹 취약점 점검</td>
-                                    <td>2023.07 - 2023.08</td>
-                                    <td>
-                                        <span class="badge bg-danger">🟥 취약점점검</span>
-                                        <span class="badge bg-dark">웹보안</span>
-                                    </td>
-                                    <td>웹 애플리케이션 보안 취약점 진단</td>
-                                    <td><span class="badge bg-success">완료</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="vuln-c">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="project-row" data-category="isms">
-                                    <td class="fw-bold">D회사 ISMS-P 인증</td>
-                                    <td>2023.03 - 2023.10</td>
-                                    <td>
-                                        <span class="badge bg-warning text-dark">🟨 ISMS</span>
-                                        <span class="badge bg-info">개인정보</span>
-                                    </td>
-                                    <td>ISMS-P 통합 인증 획득 프로젝트</td>
-                                    <td><span class="badge bg-success">완료</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="isms-d">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="project-row" data-category="aws">
-                                    <td class="fw-bold">E스타트업 보안 아키텍처</td>
-                                    <td>2024.07 - 진행중</td>
-                                    <td>
-                                        <span class="badge bg-primary">🟦 AWS</span>
-                                        <span class="badge bg-success">아키텍처</span>
-                                    </td>
-                                    <td>클라우드 기반 보안 아키텍처 설계</td>
+                                    <td>KT계열사 앱/웹/IoT 서비스 개인정보보호법 적합성 진단</td>
                                     <td><span class="badge bg-warning">진행중</span></td>
                                     <td>
-                                        <button class="btn btn-sm btn-outline-secondary" disabled title="프로젝트 진행중">
+                                        <button class="btn btn-sm btn-outline-secondary" disabled title="현재 진행중">
                                             <i class="bi bi-lock"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="project-row" data-category="pentest">
+                                    <td class="fw-bold">보험사 H사 웹모의해킹 및 모바일앱 진단</td>
+                                    <td>2023.11 - 2023.12</td>
+                                    <td>
+                                        <span class="badge bg-danger text-white">🎯 모의해킹</span>
+                                        <span class="badge bg-primary">PL</span>
+                                    </td>
+                                    <td>웹모의해킹, 모바일앱 진단 PL 및 임직원 교육</td>
+                                    <td><span class="badge bg-success">완료</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="insurance-h">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="project-row" data-category="infra">
+                                    <td class="fw-bold">은행 I사 인프라 취약점 진단 및 웹모의해킹</td>
+                                    <td>2023.02</td>
+                                    <td>
+                                        <span class="badge bg-info text-white">🏦 금융</span>
+                                        <span class="badge bg-warning text-dark">인프라</span>
+                                    </td>
+                                    <td>클라우드 PaaS/SaaS 기반 DB 인프라 점검</td>
+                                    <td><span class="badge bg-success">완료</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="bank-i">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="project-row" data-category="cloud">
+                                    <td class="fw-bold">전자 L사 DXT Center 클라우드 인프라 운영보안</td>
+                                    <td>2020.12 - 2022.08</td>
+                                    <td>
+                                        <span class="badge bg-primary text-white">☁️ AWS</span>
+                                        <span class="badge bg-success">장기</span>
+                                    </td>
+                                    <td>ISMS-P 기반 AWS 인프라 보안 점검 (1년 8개월)</td>
+                                    <td><span class="badge bg-success">완료</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="lg-cloud">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="project-row" data-category="iot">
+                                    <td class="fw-bold">헬스케어 M사 환자모니터 IoT 보안 점검</td>
+                                    <td>2020.11 - 2020.12</td>
+                                    <td>
+                                        <span class="badge bg-purple text-white">🔌 IoT</span>
+                                        <span class="badge bg-dark">헬스케어</span>
+                                    </td>
+                                    <td>OWASP API Top 10, 펌웨어 추출, 센서 통신 분석</td>
+                                    <td><span class="badge bg-success">완료</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="healthcare-iot">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="project-row" data-category="infra">
+                                    <td class="fw-bold">원자력 K사 보안방호 취약점 분석 및 표준화</td>
+                                    <td>2020.09 - 2020.12</td>
+                                    <td>
+                                        <span class="badge bg-danger text-white">🏛️ 원자력</span>
+                                        <span class="badge bg-warning text-dark">물리보안</span>
+                                    </td>
+                                    <td>IAEA 가이드 기반 원자력/수력 발전소 물리보안 점검</td>
+                                    <td><span class="badge bg-success">완료</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="nuclear-k">
+                                            <i class="bi bi-eye"></i>
                                         </button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    
+                    <!-- 더 많은 프로젝트 보기 버튼 -->
+                    <div class="text-center mt-4">
+                        <button class="btn btn-outline-primary btn-lg" id="showMoreProjects">
+                            <i class="bi bi-plus-circle"></i> 더 많은 프로젝트 보기 (20+ 전체)
+                        </button>
+                        <p class="text-muted mt-2 small">
+                            <strong>주요 클라이언트:</strong> 갓루트, LG전자, 한국수력원자력, 라스컴, 에스오티글로벌, 
+                            각종 금융/통신/게임/헬스케어 기업, 공공기관 등
+                        </p>
                     </div>
                 </div>
             </div>
@@ -251,14 +280,15 @@
                             <div class="timeline-marker bg-primary"></div>
                             <div class="timeline-content">
                                 <div class="timeline-header">
-                                    <h5 class="mb-1">2024년</h5>
-                                    <p class="text-muted mb-0">프리랜서 보안 컨설턴트</p>
+                                    <h5 class="mb-1">2024년 - 현재</h5>
+                                    <p class="text-muted mb-0">갓루트(GOTROOT) 선임컨설턴트/레드팀</p>
                                 </div>
                                 <div class="timeline-body">
-                                    <p>다양한 기업과 프로젝트를 통해 정보보안 전문성을 확장. ISMS 인증, AWS 보안 등 전문 영역에서 성과 달성</p>
+                                    <p>국내 최고 보안회사에서 레드팀으로 활동 중</p>
                                     <ul class="list-unstyled">
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> A그룹 ISMS 인증 성공</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> AWS 보안 전문가 자격 취득</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> 통신사 K사 개인정보보호법 컴플라이언스 진단 진행 중</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> KT계열사 앱/웹/IoT 서비스 보안 점검</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> 레드팀 활동 및 고급 침투테스트</li>
                                     </ul>
                                 </div>
                             </div>
@@ -269,15 +299,16 @@
                             <div class="timeline-marker bg-success"></div>
                             <div class="timeline-content">
                                 <div class="timeline-header">
-                                    <h5 class="mb-1">2020-2023년</h5>
-                                    <p class="text-muted mb-0">XYZ 보안 컨설팅 - 수석 컨설턴트</p>
+                                    <h5 class="mb-1">2022년 - 2023년</h5>
+                                    <p class="text-muted mb-0">프리랜서 & 라스컴 선임컨설턴트</p>
                                 </div>
                                 <div class="timeline-body">
-                                    <p>대기업 및 중견기업 대상 정보보안 프로젝트 리딩 및 전문 컨설팅 업무 수행</p>
+                                    <p>다양한 보안 프로젝트 PL 역할 수행 및 전문성 확장</p>
                                     <ul class="list-unstyled">
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 30+ 기업 ISMS 인증 지원</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 클라우드 보안 전문성 확보</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> CISSP 자격 취득</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> 보험사 H사 웹모의해킹 및 모바일앱 진단 PL</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> 은행 I사 클라우드 인프라 진단</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> 다수 기업 모의해킹 및 인프라 진단 프로젝트</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> 프로젝트 리더(PL) 역할 전문화</li>
                                     </ul>
                                 </div>
                             </div>
@@ -288,14 +319,16 @@
                             <div class="timeline-marker bg-info"></div>
                             <div class="timeline-content">
                                 <div class="timeline-header">
-                                    <h5 class="mb-1">2018-2020년</h5>
-                                    <p class="text-muted mb-0">ABC IT 보안팀 - 선임연구원</p>
+                                    <h5 class="mb-1">2020년 - 2022년</h5>
+                                    <p class="text-muted mb-0">에스오티글로벌 컨설턴트</p>
                                 </div>
                                 <div class="timeline-body">
-                                    <p>내부 정보보안 체계 구축 및 보안 사고 대응</p>
+                                    <p>대기업 및 특수 분야 보안 프로젝트 집중 수행</p>
                                     <ul class="list-unstyled">
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 사내 보안 정책 수립</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 보안 모니터링 시스템 구축</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> LG전자 AWS 클라우드 인프라 1년 8개월 장기 프로젝트</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> 한국수력원자력 물리보안 및 IAEA 가이드 적용</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> 헬스케어 IoT 의료기기 보안 진단</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> 금융/통신/게임 등 다양한 업종 경험</li>
                                     </ul>
                                 </div>
                             </div>
@@ -306,14 +339,16 @@
                             <div class="timeline-marker bg-warning"></div>
                             <div class="timeline-content">
                                 <div class="timeline-header">
-                                    <h5 class="mb-1">2015-2018년</h5>
-                                    <p class="text-muted mb-0">DEF 보안 솔루션 - 주임연구원</p>
+                                    <h5 class="mb-1">2019년 - 2020년</h5>
+                                    <p class="text-muted mb-0">로한아이티 사원 - 정보보안 커리어 시작</p>
                                 </div>
                                 <div class="timeline-body">
-                                    <p>보안 솔루션 개발 및 기술 지원</p>
+                                    <p>정보보안 분야 첫 커리어, 기초 실무 경험 축적</p>
                                     <ul class="list-unstyled">
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 침입탐지시스템 개발</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 고객사 기술 지원</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> 금융 I사 뉴욕지점 보안취약점 점검</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> 공사 B사 주요통신기반시설 취약점 점검</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> KISA 가이드 기반 진단 방법론 학습</li>
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> 쉘스크립트 개발 및 자동화 도구 구축</li>
                                     </ul>
                                 </div>
                             </div>
@@ -337,14 +372,14 @@
                             <div class="contact-item">
                                 <i class="bi bi-envelope display-6 text-primary mb-3"></i>
                                 <h5>이메일</h5>
-                                <p>security@example.com</p>
+                                <p>coejrqud3@gmail.com</p>
                             </div>
                         </div>
                         <div class="col-md-4 mb-4">
                             <div class="contact-item">
                                 <i class="bi bi-telephone display-6 text-primary mb-3"></i>
                                 <h5>전화</h5>
-                                <p>010-1234-5678</p>
+                                <p>010-5558-1512</p>
                             </div>
                         </div>
                         <div class="col-md-4 mb-4">
@@ -384,7 +419,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center">
-                    <p class="mb-0">&copy; 2024 정보보안 전문가 포트폴리오. All rights reserved.</p>
+                    <p class="mb-0">&copy; 2024 침투테스트 전문가 포트폴리오. All rights reserved.</p>
                 </div>
             </div>
         </div>
