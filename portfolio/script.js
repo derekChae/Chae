@@ -175,24 +175,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const tableRows = document.querySelectorAll('.projects-table tbody tr');
     
     tableRows.forEach(row => {
-        row.addEventListener('click', function() {
-            // 클릭 효과
-            this.style.transform = 'scale(0.98)';
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 150);
-            
-            // 프로젝트 상세 정보 모달 또는 페이지로 이동
-            const projectLink = this.querySelector('a[href="#"]');
-            if (projectLink && !projectLink.classList.contains('disabled')) {
-                console.log('프로젝트 상세 페이지로 이동:', this.querySelector('.fw-bold').textContent);
-                // 여기에 실제 링크 로직 구현
-            }
-        });
-        
-        // 호버 효과 개선
+        // 버튼 클릭은 모달에서 처리하므로 행 클릭 이벤트는 제거
         row.addEventListener('mouseenter', function() {
-            this.style.cursor = 'pointer';
+            this.style.cursor = 'default';
         });
     });
     
