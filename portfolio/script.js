@@ -1,5 +1,5 @@
 /* ================================
-   보안 컨설팅 포트폴리오 JavaScript
+   정보보안 전문가 포트폴리오 JavaScript
    ================================ */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -323,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ================================
     // 초기화 완료 로그
     // ================================
-    console.log('🔒 보안 컨설팅 포트폴리오 JavaScript 초기화 완료');
+    console.log('🔒 정보보안 전문가 포트폴리오 JavaScript 초기화 완료');
     
 });
 
