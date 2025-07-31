@@ -1,5 +1,5 @@
 /* ================================
-   정보보안 전문가 포트폴리오 CSS
+   침투테스트 전문가 포트폴리오 CSS
    ================================ */
 
 /* 전역 스타일 */
@@ -235,12 +235,106 @@ html {
     transform: scale(1.1);
 }
 
+/* 프로젝트 테이블 버튼 개선 */
+.projects-table .btn-sm {
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.4rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.projects-table .btn-outline-primary:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+}
+
+.projects-table .btn-outline-secondary {
+    opacity: 0.6;
+}
+
+/* ================================
+   노션 연동 스타일
+   ================================ */
+.btn-notion {
+    background: linear-gradient(135deg, #000000 0%, #2d2d2d 100%);
+    color: white !important;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-notion:hover {
+    background: linear-gradient(135deg, #2d2d2d 0%, #000000 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    color: white !important;
+}
+
+.btn-notion:active {
+    transform: translateY(0);
+}
+
+.notion-preview {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    border-left: 4px solid #000000;
+}
+
+.notion-preview .alert {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 0;
+}
+
+.notion-preview .bi-file-text {
+    color: #000000;
+    margin-right: 0.5rem;
+}
+
+/* 모달 개선 */
+.modal-content {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #4c84ff 100%);
+    color: white;
+    border-radius: 1rem 1rem 0 0;
+    border-bottom: none;
+}
+
+.modal-header .btn-close {
+    filter: invert(1);
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 1.5rem 2rem;
+}
+
 /* ================================
    배지 스타일 커스터마이징
    ================================ */
 .badge {
     font-size: 0.75em;
     padding: 0.5em 0.75em;
+}
+
+/* 커스텀 배지 색상 */
+.bg-purple {
+    background-color: #6f42c1 !important;
 }
 
 /* ================================
@@ -343,6 +437,53 @@ html {
     .projects-table td:nth-child(2) {
         display: none;
     }
+}
+
+/* 모달 애니메이션 개선 */
+.modal.fade .modal-dialog {
+    transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+    transform: translate(0, -50px) scale(0.9);
+}
+
+.modal.show .modal-dialog {
+    transform: translate(0, 0) scale(1);
+}
+
+/* 로딩 효과 */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.loading-pulse {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* 버튼 클릭 효과 */
+.btn-click-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-click-effect::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: width 0.3s, height 0.3s, top 0.3s, left 0.3s;
+    z-index: 1;
+}
+
+.btn-click-effect:active::before {
+    width: 300px;
+    height: 300px;
+    top: calc(50% - 150px);
+    left: calc(50% - 150px);
 }
 
 /* ================================
