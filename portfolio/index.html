@@ -162,9 +162,9 @@
                                     <td>대기업 ISMS 인증 획득 지원</td>
                                     <td><span class="badge bg-success">완료</span></td>
                                     <td>
-                                        <a href="#" class="btn btn-sm btn-outline-primary">
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="isms-a">
                                             <i class="bi bi-eye"></i>
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                                 <tr class="project-row" data-category="aws">
@@ -177,9 +177,9 @@
                                     <td>AWS 인프라 보안 설정 및 모니터링 구축</td>
                                     <td><span class="badge bg-success">완료</span></td>
                                     <td>
-                                        <a href="#" class="btn btn-sm btn-outline-primary">
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="aws-b">
                                             <i class="bi bi-eye"></i>
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                                 <tr class="project-row" data-category="vuln">
@@ -192,9 +192,9 @@
                                     <td>웹 애플리케이션 보안 취약점 진단</td>
                                     <td><span class="badge bg-success">완료</span></td>
                                     <td>
-                                        <a href="#" class="btn btn-sm btn-outline-primary">
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="vuln-c">
                                             <i class="bi bi-eye"></i>
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                                 <tr class="project-row" data-category="isms">
@@ -207,9 +207,9 @@
                                     <td>ISMS-P 통합 인증 획득 프로젝트</td>
                                     <td><span class="badge bg-success">완료</span></td>
                                     <td>
-                                        <a href="#" class="btn btn-sm btn-outline-primary">
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="isms-d">
                                             <i class="bi bi-eye"></i>
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                                 <tr class="project-row" data-category="aws">
@@ -222,9 +222,9 @@
                                     <td>클라우드 기반 보안 아키텍처 설계</td>
                                     <td><span class="badge bg-warning">진행중</span></td>
                                     <td>
-                                        <a href="#" class="btn btn-sm btn-outline-secondary disabled">
+                                        <button class="btn btn-sm btn-outline-secondary" disabled title="프로젝트 진행중">
                                             <i class="bi bi-lock"></i>
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -359,6 +359,25 @@
             </div>
         </div>
     </section>
+
+    <!-- 프로젝트 상세 모달 -->
+    <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="projectModalLabel">프로젝트 상세정보</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalContent">
+                    <!-- 프로젝트 상세 내용이 여기에 동적으로 로드됩니다 -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <a href="#" class="btn btn-primary" id="modalViewMore" target="_blank">더 보기</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- 푸터 -->
     <footer class="bg-dark text-white py-4">
