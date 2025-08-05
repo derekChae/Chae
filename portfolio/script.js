@@ -1,7 +1,3 @@
-/* ================================
-   정보보안 전문가 포트폴리오 JavaScript
-   ================================ */
-
 document.addEventListener('DOMContentLoaded', function() {
     // ================================
     // 부드러운 스크롤 네비게이션
@@ -41,8 +37,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function onScroll() {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
+            navbar.style.backgroundColor = 'rgba(33, 37, 41, 0.98)';
+            navbar.style.backdropFilter = 'blur(15px)';
         } else {
             navbar.classList.remove('scrolled');
+            navbar.style.backgroundColor = 'rgba(33, 37, 41, 0.95)';
+            navbar.style.backdropFilter = 'blur(10px)';
         }
         highlightCurrentSection();
         ticking = false;
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ================================
     const scrollTopBtn = document.createElement('button');
     scrollTopBtn.innerHTML = '<i class="bi bi-arrow-up"></i>';
-    scrollTopBtn.className = 'btn btn-primary position-fixed scroll-top-btn';
+    scrollTopBtn.className = 'btn btn-primary position-fixed';
     scrollTopBtn.setAttribute('aria-label', '맨 위로 이동');
     scrollTopBtn.style.cssText = `
         bottom: 2rem;
