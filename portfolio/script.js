@@ -20,6 +20,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.warn('잘못된 네비게이션 링크:', targetId);
                 return;
             }
+    
+    // ================================
+    // 새 창에서 노션 열기 버튼 이벤트
+    // ================================
+    if (modalViewMore) {
+        modalViewMore.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            if (this.href && this.href !== 'javascript:void(0)') {
+                // 로딩 효과
+                const originalText = this.innerHTML;
+                this.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>새 창에서 열기...';
+                this.disabled = true;
+                
+                setTimeout(() => {
+                    console.log('새 창에서 노션 열기:', this.href);
+                    window.open(this.href, '_blank');
+                    
+                    // 버튼 복원
+                    this.innerHTML = originalText;
+                    this.disabled = false;
+                }, 500);
+            } else {
+                alert('노션 링크가 설정되지 않았습니다.');
+            }
+        });
+    }
             
             const targetSection = document.querySelector(targetId);
             
@@ -319,6 +346,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // ================================
     console.log('🔒 정보보안 전문가 포트폴리오 JavaScript 초기화 완료');
     console.log('노션 링크 설정 확인:', 'https://deokbyeong.notion.site/2022-12-12-2022-12-30-a549480fd1c241569c39df59691edd25');
+    console.log('modalViewMore 버튼:', modalViewMore ? '✅ 발견' : '❌ 없음');
+    console.log('modalToggleNotion 버튼:', modalToggleNotion ? '✅ 발견' : '❌ 없음');
     
 });
 
