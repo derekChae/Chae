@@ -22,6 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
     
     // ================================
+    // 더 많은 프로젝트 보기 기능
+    // ================================
+    const showMoreBtn = document.getElementById('showMoreProjects');
+    
+    // ================================
     // 새 창에서 노션 열기 버튼 이벤트
     // ================================
     if (modalViewMore) {
@@ -345,6 +350,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 초기화 완료 로그
     // ================================
     console.log('🔒 정보보안 전문가 포트폴리오 JavaScript 초기화 완료');
+    console.log('🤖 AI 챗봇 시스템 준비 완료 - 우하단 로봇 아이콘 클릭!');
     console.log('노션 링크 설정 확인:', 'https://deokbyeong.notion.site/2022-12-12-2022-12-30-a549480fd1c241569c39df59691edd25');
     console.log('modalViewMore 버튼:', modalViewMore ? '✅ 발견' : '❌ 없음');
     console.log('modalToggleNotion 버튼:', modalToggleNotion ? '✅ 발견' : '❌ 없음');
