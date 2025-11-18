@@ -3,618 +3,479 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>정보보안 전문가 포트폴리오 | Information Security Professional</title>
-    
-    <!-- Bootstrap 5 CSS CDN -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
-    <!-- 커스텀 CSS -->
-    <link href="styles.css" rel="stylesheet">
+    <title>컴플라이언스 플로우 검증 - Security Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; }
+        .scrollbar-thin::-webkit-scrollbar { width: 4px; }
+        .scrollbar-thin::-webkit-scrollbar-track { background: #1f2937; }
+        .scrollbar-thin::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 2px; }
+    </style>
 </head>
 <body>
-    <!-- 상단 내비게이션 바 -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="#home">
-                <i class="bi bi-shield-check"></i> Security Portfolio
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">소개</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#projects">프로젝트</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#timeline">타임라인</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">연락처</a>
-                    </li>
-                </ul>
-            </div>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useRef } = React;
 
-    <!-- 푸터 -->
-    <footer class="bg-dark text-white py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <p class="mb-0">&copy; 2024 정보보안 전문가 포트폴리오. All rights reserved.</p>
-                    <small class="text-muted">🤖 AI 챗봇으로 더 쉽게 포트폴리오를 탐색해보세요!</small>
-                </div>
-            </div>
-        </div>
-    </footer>
-        </div>
-    </nav>
+        function ComplianceFlowPortfolio() {
+            const [currentScreen, setCurrentScreen] = useState(0);
+            const [selectedElement, setSelectedElement] = useState(null);
+            const [highlightedLaw, setHighlightedLaw] = useState(null);
+            const [checkboxStates, setCheckboxStates] = useState({});
+            const [violations, setViolations] = useState([]);
+            const lawRefs = useRef({});
 
-    <!-- 히어로 섹션 -->
-    <section id="home" class="hero-section">
-        <div class="container">
-            <div class="row align-items-center min-vh-100">
-                <div class="col-lg-6">
-                    <h1 class="display-4 fw-bold text-white mb-4">
-                        정보보안 전문가
-                    </h1>
-                    <p class="lead text-white-75 mb-4">
-                        갓루트(GOTROOT) 선임컨설턴트로 재직 중이며, 전기/전자, 금융업계 경험을 바탕으로 한 
-                        차별화된 도메인 전문성과 정보보안 기술력을 결합한 5년 이상의 실무 경험을 보유하고 있습니다.
-                    </p>
-                    <div class="d-flex gap-3">
-                        <a href="#projects" class="btn btn-primary btn-lg">
-                            <i class="bi bi-folder"></i> 프로젝트 보기
-                        </a>
-                        <a href="#contact" class="btn btn-outline-light btn-lg">
-                            <i class="bi bi-person-vcard"></i> 연락처 보기
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-6 text-center">
-                    <div class="hero-icon">
-                        <i class="bi bi-shield-lock display-1 text-primary"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            const screens = [
+                {
+                    id: 'consent',
+                    title: '약관동의',
+                    elements: [
+                        { id: 'all-agree', label: '전체동의 (선택항목 포함)', type: 'checkbox', laws: ['law-22'], required: false, isAllAgree: true },
+                        { id: 'required-1', label: '[필수] 개인정보 수집·이용 동의', type: 'checkbox', laws: ['law-15', 'law-22'], required: true },
+                        { id: 'required-2', label: '[필수] 고유식별정보 처리 동의', type: 'checkbox', laws: ['law-24'], required: true },
+                        { id: 'optional-1', label: '[선택] 마케팅 정보 수신 동의', type: 'checkbox', laws: ['law-50'], required: false }
+                    ],
+                    button: '동의하고 계속하기'
+                },
+                {
+                    id: 'identity',
+                    title: '본인인증',
+                    elements: [
+                        { id: 'name', label: '이름', type: 'input', placeholder: '홍길동', laws: ['law-15'], required: true },
+                        { id: 'ssn', label: '주민등록번호', type: 'input', placeholder: '900101 - 1******', laws: ['law-24', 'law-24-2'], required: true },
+                        { id: 'carrier', label: '통신사', type: 'select', placeholder: 'SKT / KT / LG U+', laws: ['law-32'], required: true },
+                        { id: 'phone', label: '휴대폰번호', type: 'input', placeholder: '010-1234-5678', laws: ['law-15'], required: true }
+                    ],
+                    button: '인증번호 요청'
+                },
+                {
+                    id: 'otp',
+                    title: '인증번호 확인',
+                    elements: [
+                        { id: 'otp-input', label: '인증번호 6자리', type: 'otp', placeholder: '● ● ● ● ● ●', laws: ['law-23-3', 'law-29'], required: true },
+                        { id: 'timer', label: '남은시간', type: 'timer', placeholder: '03:00', laws: ['law-29'], required: false },
+                        { id: 'resend', label: '인증번호 재전송', type: 'link', laws: ['law-29'], required: false }
+                    ],
+                    button: '인증완료'
+                },
+                {
+                    id: 'complete',
+                    title: '인증완료',
+                    elements: [
+                        { id: 'result-name', label: '이름', type: 'result', placeholder: '홍**', laws: ['law-30'], required: false },
+                        { id: 'result-birth', label: '생년월일', type: 'result', placeholder: '1990.**.**', laws: ['law-30'], required: false },
+                        { id: 'result-phone', label: '휴대폰', type: 'result', placeholder: '010-****-5678', laws: ['law-30', 'law-21'], required: false }
+                    ],
+                    button: '확인'
+                }
+            ];
 
-    <!-- 소개 섹션 -->
-    <section id="about" class="py-5 bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 mx-auto text-center">
-                    <h2 class="section-title mb-4">About Me</h2>
-                    <p class="lead mb-4">
-                        전기/전자 엔지니어, 금융영업 등 다양한 산업 경험을 거쳐 2019년부터 정보보안 분야로 전환하였으며, 
-                        현재 갓루트(GOTROOT)에서 선임컨설턴트/레드팀으로 재직 중입니다. 
-                        다양한 업계 경험을 바탕으로 한 깊이 있는 도메인 이해와 정보보안 전문성을 결합하여 
-                        금융, 통신, 제조, 원자력 등 다양한 업종에서 프로젝트를 성공적으로 수행하고 있습니다.
-                    </p>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 border-0 shadow-sm">
-                        <div class="card-body text-center">
-                            <i class="bi bi-award display-4 text-primary mb-3"></i>
-                            <h5 class="card-title">현재 소속</h5>
-                            <p class="card-text">갓루트(GOTROOT) 선임컨설턴트/레드팀 재직 중 (2024.01~현재)</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 border-0 shadow-sm">
-                        <div class="card-body text-center">
-                            <i class="bi bi-graph-up display-4 text-success mb-3"></i>
-                            <h5 class="card-title">주요 성과</h5>
-                            <p class="card-text">5년+ 실무 경험, 20+ 기업 모의해킹/인프라진단, 다수 PL 경험 보유</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 border-0 shadow-sm">
-                        <div class="card-body text-center">
-                            <i class="bi bi-people display-4 text-info mb-3"></i>
-                            <h5 class="card-title">전문 분야</h5>
-                            <p class="card-text">모의해킹, 인프라진단, 클라우드보안, IoT보안 + 금융/제조/전력업계 도메인 전문성</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            const laws = {
+                'law-15': {
+                    id: 'law-15',
+                    title: '개인정보보호법 제15조',
+                    subtitle: '개인정보의 수집·이용',
+                    description: '개인정보처리자는 정보주체의 동의를 받은 경우 개인정보를 수집할 수 있으며, 그 수집 목적의 범위에서 이용할 수 있다.',
+                    checkpoints: ['수집 목적 명시 여부', '수집 항목 고지 여부', '보유기간 안내 여부'],
+                    violationText: '개인정보 수집·이용 동의 없이 정보를 수집하는 것은 위법입니다.'
+                },
+                'law-22': {
+                    id: 'law-22',
+                    title: '개인정보보호법 제22조',
+                    subtitle: '동의를 받는 방법',
+                    description: '개인정보처리자는 동의를 받을 때에는 각각의 동의 사항을 구분하여 정보주체가 이를 명확하게 인지할 수 있도록 알리고 각각 동의를 받아야 한다.',
+                    checkpoints: ['필수/선택 동의 분리', '개별 동의 획득 방식', '동의 거부권 안내'],
+                    violationText: '동의 사항을 구분하지 않고 일괄 동의를 받는 것은 위법입니다.'
+                },
+                'law-24': {
+                    id: 'law-24',
+                    title: '개인정보보호법 제24조',
+                    subtitle: '고유식별정보의 처리 제한',
+                    description: '개인정보처리자는 법령에서 구체적으로 고유식별정보의 처리를 요구하거나 허용하는 경우에 고유식별정보를 처리할 수 있다.',
+                    checkpoints: ['처리 법적 근거 확인', '별도 동의 획득 여부', '암호화 조치 여부'],
+                    violationText: '고유식별정보 처리 동의 없이 주민번호를 수집하는 것은 위법입니다.'
+                },
+                'law-24-2': {
+                    id: 'law-24-2',
+                    title: '개인정보보호법 제24조의2',
+                    subtitle: '주민등록번호 처리의 제한',
+                    description: '개인정보처리자는 법령에서 구체적으로 주민등록번호의 처리를 요구하거나 허용한 경우를 제외하고는 주민등록번호를 처리할 수 없다.',
+                    checkpoints: ['법적 처리 근거 존재', '대체수단 검토 여부', '최소 수집 원칙 준수'],
+                    violationText: '법적 근거 없이 주민등록번호를 수집하는 것은 위법입니다.'
+                },
+                'law-50': {
+                    id: 'law-50',
+                    title: '정보통신망법 제50조',
+                    subtitle: '영리목적의 광고성 정보 전송 제한',
+                    description: '누구든지 전자적 전송매체를 이용하여 영리목적의 광고성 정보를 전송하려면 그 수신자의 명시적인 사전 동의를 받아야 한다.',
+                    checkpoints: ['사전 동의 획득 여부', '수신거부 방법 안내', '발신자 정보 표시'],
+                    violationText: '마케팅 동의 없이 광고성 정보를 전송하는 것은 위법입니다.'
+                },
+                'law-32': {
+                    id: 'law-32',
+                    title: '신용정보법 제32조',
+                    subtitle: '본인확인기관',
+                    description: '본인확인기관은 본인확인서비스를 제공하기 위하여 개인정보를 수집·이용할 수 있다.',
+                    checkpoints: ['본인확인기관 지정 여부', 'CI/DI 생성 및 관리', '본인확인 결과 전송'],
+                    violationText: '지정되지 않은 기관이 본인확인 서비스를 제공하는 것은 위법입니다.'
+                },
+                'law-23-3': {
+                    id: 'law-23-3',
+                    title: '정보통신망법 제23조의3',
+                    subtitle: '본인확인기관의 지정 등',
+                    description: '방송통신위원회는 정보통신서비스 제공자의 본인확인업무를 지원하기 위하여 본인확인기관을 지정할 수 있다.',
+                    checkpoints: ['지정된 기관 사용 여부', '인증 유효시간 설정', '인증정보 암호화 전송'],
+                    violationText: '인증 유효시간을 설정하지 않는 것은 보안 위반입니다.'
+                },
+                'law-29': {
+                    id: 'law-29',
+                    title: '개인정보보호법 제29조',
+                    subtitle: '안전조치의무',
+                    description: '개인정보처리자는 개인정보가 분실·도난·유출·위조·변조 또는 훼손되지 아니하도록 안전성 확보에 필요한 기술적·관리적 및 물리적 조치를 하여야 한다.',
+                    checkpoints: ['인증정보 암호화', '접근권한 관리', '접속기록 보관'],
+                    violationText: '안전조치 없이 개인정보를 처리하는 것은 위법입니다.'
+                },
+                'law-21': {
+                    id: 'law-21',
+                    title: '개인정보보호법 제21조',
+                    subtitle: '개인정보의 파기',
+                    description: '개인정보처리자는 보유기간의 경과, 개인정보의 처리 목적 달성 등 그 개인정보가 불필요하게 되었을 때에는 지체 없이 그 개인정보를 파기하여야 한다.',
+                    checkpoints: ['목적 달성 후 즉시 파기', '파기 방법 적정성', '파기 기록 관리'],
+                    violationText: '목적 달성 후 개인정보를 파기하지 않는 것은 위법입니다.'
+                },
+                'law-30': {
+                    id: 'law-30',
+                    title: '개인정보보호법 제30조',
+                    subtitle: '개인정보 처리방침의 수립 및 공개',
+                    description: '개인정보처리자는 개인정보의 처리 목적, 처리 및 보유 기간, 제3자 제공에 관한 사항 등을 포함한 개인정보 처리방침을 정하여야 한다.',
+                    checkpoints: ['마스킹 처리 적용', '최소 정보 표시', '처리방침 공개'],
+                    violationText: '개인정보 처리방침을 공개하지 않는 것은 위법입니다.'
+                }
+            };
 
-    <!-- 프로젝트 섹션 -->
-    <section id="projects" class="py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h2 class="section-title text-center mb-5">주요 프로젝트</h2>
-                </div>
-            </div>
-            
-            <!-- 프로젝트 필터 버튼 -->
-            <div class="row mb-4">
-                <div class="col-12 text-center">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-outline-primary active" data-filter="all">전체</button>
-                        <button type="button" class="btn btn-outline-primary" data-filter="pentest">모의해킹</button>
-                        <button type="button" class="btn btn-outline-primary" data-filter="infra">인프라진단</button>
-                        <button type="button" class="btn btn-outline-primary" data-filter="cloud">클라우드</button>
-                        <button type="button" class="btn btn-outline-primary" data-filter="iot">IoT/모바일</button>
-                        <button type="button" class="btn btn-outline-primary" data-filter="current">현재진행</button>
-                    </div>
-                </div>
-            </div>
+            const currentScreenData = screens[currentScreen];
+            const requiredElements = currentScreenData.elements.filter(el => el.required && el.type === 'checkbox');
+            const allRequiredChecked = requiredElements.every(el => checkboxStates[el.id]);
 
-            <!-- 반응형 프로젝트 테이블 -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="table-responsive">
-                        <table class="table table-hover projects-table">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>프로젝트명</th>
-                                    <th>기간</th>
-                                    <th>태그</th>
-                                    <th>설명</th>
-                                    <th>상태</th>
-                                    <th>링크</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="project-row" data-category="current">
-                                    <td class="fw-bold">통신사 K사 개인정보보호법 컴플라이언스 진단</td>
-                                    <td>2024.01 - 현재</td>
-                                    <td>
-                                        <span class="badge bg-success text-white">🏢 진행중</span>
-                                        <span class="badge bg-info">컴플라이언스</span>
-                                    </td>
-                                    <td>KT계열사 앱/웹/IoT 서비스 개인정보보호법 적합성 진단</td>
-                                    <td><span class="badge bg-warning">진행중</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="kt-current" title="진행중 프로젝트">
-                                            <i class="bi bi-eye-fill"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="project-row" data-category="pentest">
-                                    <td class="fw-bold">보험사 H사 웹모의해킹 및 모바일앱 진단</td>
-                                    <td>2023.11 - 2023.12</td>
-                                    <td>
-                                        <span class="badge bg-danger text-white">🎯 모의해킹</span>
-                                        <span class="badge bg-primary">PL</span>
-                                    </td>
-                                    <td>웹모의해킹, 모바일앱 진단 PL 및 임직원 교육</td>
-                                    <td><span class="badge bg-success">완료</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="insurance-h">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="project-row" data-category="pentest">
-                                    <td class="fw-bold">공공기관 K사 웹 취약점 점검</td>
-                                    <td>2023.04 - 2023.05</td>
-                                    <td>
-                                        <span class="badge bg-danger text-white">🎯 모의해킹</span>
-                                        <span class="badge bg-warning text-dark">공공</span>
-                                    </td>
-                                    <td>웹모의해킹 진단 PL 업무</td>
-                                    <td><span class="badge bg-success">완료</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="public-k">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="project-row" data-category="infra">
-                                    <td class="fw-bold">은행 I사 인프라 취약점 진단 및 웹모의해킹</td>
-                                    <td>2023.02</td>
-                                    <td>
-                                        <span class="badge bg-info text-white">🏦 금융</span>
-                                        <span class="badge bg-warning text-dark">인프라</span>
-                                    </td>
-                                    <td>클라우드 PaaS/SaaS 기반 DB 인프라 점검</td>
-                                    <td><span class="badge bg-success">완료</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="bank-i">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="project-row" data-category="pentest">
-                                    <td class="fw-bold">화장품 C사 모의침투 및 웹 점검</td>
-                                    <td>2022.12</td>
-                                    <td>
-                                        <span class="badge bg-danger text-white">🎯 침투테스트</span>
-                                        <span class="badge bg-secondary">화장품</span>
-                                    </td>
-                                    <td>외부자 관점 모의침투 진단 및 웹 모의해킹</td>
-                                    <td><span class="badge bg-success">완료</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="cosmetic-c">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="project-row" data-category="infra">
-                                    <td class="fw-bold">보험 H사 취약점 분석 평가</td>
-                                    <td>2022.10 - 2022.11</td>
-                                    <td>
-                                        <span class="badge bg-info text-white">🏦 금융</span>
-                                        <span class="badge bg-primary">PL</span>
-                                    </td>
-                                    <td>전자금융기반시설 기준 인프라 진단 및 웹/앱 모의해킹</td>
-                                    <td><span class="badge bg-success">완료</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="insurance-h2">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="project-row" data-category="cloud">
-                                    <td class="fw-bold">전자 L사 DXT Center 클라우드 인프라 운영보안</td>
-                                    <td>2020.12 - 2022.08</td>
-                                    <td>
-                                        <span class="badge bg-primary text-white">☁️ AWS</span>
-                                        <span class="badge bg-success">장기</span>
-                                    </td>
-                                    <td>ISMS-P 기반 AWS 인프라 보안 점검 (1년 8개월)</td>
-                                    <td><span class="badge bg-success">완료</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="lg-cloud">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="project-row" data-category="iot">
-                                    <td class="fw-bold">헬스케어 M사 환자모니터 IoT 보안 점검</td>
-                                    <td>2020.11 - 2020.12</td>
-                                    <td>
-                                        <span class="badge bg-purple text-white">🔌 IoT</span>
-                                        <span class="badge bg-dark">헬스케어</span>
-                                    </td>
-                                    <td>OWASP API Top 10, 펌웨어 추출, 센서 통신 분석</td>
-                                    <td><span class="badge bg-success">완료</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="healthcare-iot">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="project-row" data-category="infra">
-                                    <td class="fw-bold">원자력 K사 보안방호 취약점 분석 및 표준화</td>
-                                    <td>2020.09 - 2020.12</td>
-                                    <td>
-                                        <span class="badge bg-danger text-white">🏛️ 원자력</span>
-                                        <span class="badge bg-warning text-dark">물리보안</span>
-                                    </td>
-                                    <td>IAEA 가이드 기반 원자력/수력 발전소 물리보안 점검</td>
-                                    <td><span class="badge bg-success">완료</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="nuclear-k">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="project-row" data-category="pentest">
-                                    <td class="fw-bold">화장품 L사 마트브랜드 웹/CS 모의해킹</td>
-                                    <td>2020.09 - 2020.10</td>
-                                    <td>
-                                        <span class="badge bg-danger text-white">🎯 모의해킹</span>
-                                        <span class="badge bg-secondary">화장품</span>
-                                    </td>
-                                    <td>OWASP Top 10 기반 웹 모의해킹, XSS Stored 등 취약점 도출</td>
-                                    <td><span class="badge bg-success">완료</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="cosmetic-l">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="project-row" data-category="iot">
-                                    <td class="fw-bold">게임 C사 모바일 앱 취약점 진단</td>
-                                    <td>2020.03 - 2020.05</td>
-                                    <td>
-                                        <span class="badge bg-purple text-white">📱 모바일</span>
-                                        <span class="badge bg-success">게임</span>
-                                    </td>
-                                    <td>KISA 모바일 대민서비스 보안취약점 점검, 자체 도구 개발</td>
-                                    <td><span class="badge bg-success">완료</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="game-c">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="project-row" data-category="infra">
-                                    <td class="fw-bold">금융 I사 뉴욕지점 보안취약점 점검</td>
-                                    <td>2019.10 - 2019.12</td>
-                                    <td>
-                                        <span class="badge bg-info text-white">🏦 금융</span>
-                                        <span class="badge bg-warning text-dark">해외</span>
-                                    </td>
-                                    <td>전자금융기반 및 KISA 주통기 기반 대량 점검</td>
-                                    <td><span class="badge bg-success">완료</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project="finance-i">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            const handleCheckboxToggle = (element) => {
+                if (element.isAllAgree) {
+                    const newState = !checkboxStates[element.id];
+                    const newCheckboxStates = { ...checkboxStates };
+                    currentScreenData.elements.forEach(el => {
+                        if (el.type === 'checkbox') {
+                            newCheckboxStates[el.id] = newState;
+                        }
+                    });
+                    setCheckboxStates(newCheckboxStates);
+                } else {
+                    const newState = !checkboxStates[element.id];
+                    setCheckboxStates(prev => ({ ...prev, [element.id]: newState }));
                     
-                    <!-- 더 많은 프로젝트 보기 버튼 -->
-                    <div class="text-center mt-4">
-                        <button class="btn btn-outline-primary btn-lg" id="showMoreProjects">
-                            <i class="bi bi-plus-circle"></i> 전체 프로젝트 이력 보기
-                        </button>
-                        <p class="text-muted mt-2 small">
-                            <strong>경험 분야:</strong> 금융권, 통신사, 게임, 헬스케어, 원자력, 공공기관, 
-                            모의해킹, 인프라진단, 클라우드보안, IoT보안, 모바일앱진단 등
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                    const allAgreeElement = currentScreenData.elements.find(el => el.isAllAgree);
+                    if (allAgreeElement) {
+                        const otherCheckboxes = currentScreenData.elements.filter(el => el.type === 'checkbox' && !el.isAllAgree);
+                        const allOthersChecked = otherCheckboxes.every(el => 
+                            el.id === element.id ? newState : checkboxStates[el.id]
+                        );
+                        setCheckboxStates(prev => ({ ...prev, [allAgreeElement.id]: allOthersChecked }));
+                    }
+                }
+            };
 
-    <!-- 타임라인 섹션 -->
-    <section id="timeline" class="py-5 bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h2 class="section-title text-center mb-5">경력 타임라인</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-10 mx-auto">
-                    <div class="timeline">
-                        <!-- 타임라인 아이템 1 -->
-                        <div class="timeline-item">
-                            <div class="timeline-marker bg-primary"></div>
-                            <div class="timeline-content">
-                                <div class="timeline-header">
-                                    <h5 class="mb-1">2024년 - 현재</h5>
-                                    <p class="text-muted mb-0">갓루트(GOTROOT) 선임컨설턴트/레드팀</p>
-                                </div>
-                                <div class="timeline-body">
-                                    <p>국내 최고 수준의 보안 전문회사에서 레드팀 구성원으로 활동 중</p>
-                                    <ul class="list-unstyled">
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 통신사 K사 개인정보보호법 컴플라이언스 진단 수행 중</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> KT계열사 앱/웹/IoT 서비스 보안 점검</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 레드팀 활동 및 고급 침투테스트 업무</li>
-                                    </ul>
-                                </div>
+            const handleElementClick = (element) => {
+                setSelectedElement(element.id);
+                setHighlightedLaw(element.laws);
+                
+                if (element.laws && element.laws.length > 0) {
+                    const firstLawId = element.laws[0];
+                    if (lawRefs.current[firstLawId]) {
+                        lawRefs.current[firstLawId].scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'center' 
+                        });
+                    }
+                }
+
+                if (element.type === 'checkbox' && element.required && !checkboxStates[element.id]) {
+                    const violationLaws = element.laws.map(lawId => ({
+                        ...laws[lawId],
+                        elementLabel: element.label
+                    }));
+                    setViolations(violationLaws);
+                } else {
+                    setViolations([]);
+                }
+            };
+
+            const handleNextScreen = () => {
+                if (currentScreen === 0 && !allRequiredChecked) {
+                    const uncheckedRequired = requiredElements.filter(el => !checkboxStates[el.id]);
+                    const violationLaws = uncheckedRequired.flatMap(el => 
+                        el.laws.map(lawId => ({
+                            ...laws[lawId],
+                            elementLabel: el.label
+                        }))
+                    );
+                    setViolations(violationLaws);
+                    return;
+                }
+                
+                if (currentScreen < screens.length - 1) {
+                    setCurrentScreen(prev => prev + 1);
+                    setSelectedElement(null);
+                    setHighlightedLaw(null);
+                    setViolations([]);
+                }
+            };
+
+            const currentLaws = [...new Set(currentScreenData.elements.flatMap(el => el.laws))];
+
+            return (
+                <div className="h-screen bg-gray-900 text-white flex flex-col overflow-hidden">
+                    {/* Header */}
+                    <div className="p-4 border-b border-gray-800 flex-shrink-0">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <h1 className="text-lg md:text-xl font-bold text-white">
+                                    본인인증 앱 컴플라이언스 검증
+                                </h1>
+                                <p className="text-gray-400 text-xs">K사 개인정보보호법 보안 검증 프로젝트</p>
                             </div>
-                        </div>
-
-                        <!-- 타임라인 아이템 2 -->
-                        <div class="timeline-item">
-                            <div class="timeline-marker bg-success"></div>
-                            <div class="timeline-content">
-                                <div class="timeline-header">
-                                    <h5 class="mb-1">2022년 - 2023년</h5>
-                                    <p class="text-muted mb-0">프리랜서 & 라스컴 선임컨설턴트</p>
-                                </div>
-                                <div class="timeline-body">
-                                    <p>다양한 보안 프로젝트에서 프로젝트 리더(PL) 역할을 담당하며 전문성을 확장</p>
-                                    <ul class="list-unstyled">
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 보험사 H사 웹모의해킹 및 모바일앱 진단 PL</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 은행 I사 클라우드 인프라 진단</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 다수 기업 모의해킹 및 인프라 진단 프로젝트 수행</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 프로젝트 리더(PL) 역할 전문화</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 타임라인 아이템 3 -->
-                        <div class="timeline-item">
-                            <div class="timeline-marker bg-info"></div>
-                            <div class="timeline-content">
-                                <div class="timeline-header">
-                                    <h5 class="mb-1">2020년 - 2022년</h5>
-                                    <p class="text-muted mb-0">에스오티글로벌 컨설턴트</p>
-                                </div>
-                                <div class="timeline-body">
-                                    <p>대기업 및 국가 핵심 인프라 보안 프로젝트에서 풍부한 경험을 축적</p>
-                                    <ul class="list-unstyled">
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> LG전자 AWS 클라우드 인프라 1년 8개월 장기 프로젝트</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 한국수력원자력 물리보안 및 IAEA 가이드 적용</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 헬스케어 IoT 의료기기 보안 진단</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 금융/통신/게임 등 다양한 업종에서 경험 축적</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 타임라인 아이템 4 -->
-                        <div class="timeline-item">
-                            <div class="timeline-marker bg-warning"></div>
-                            <div class="timeline-content">
-                                <div class="timeline-header">
-                                    <h5 class="mb-1">2019년 - 2020년</h5>
-                                    <p class="text-muted mb-0">로한아이티 사원 - 정보보안 커리어 시작</p>
-                                </div>
-                                <div class="timeline-body">
-                                    <p>정보보안 분야에서의 첫 커리어를 시작하며 기초 실무 역량을 구축</p>
-                                    <ul class="list-unstyled">
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 금융 I사 뉴욕지점 보안취약점 점검</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 공사 B사 주요통신기반시설 취약점 점검</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> KISA 가이드 기반 진단 방법론 학습</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> 쉘스크립트 개발 및 자동화 도구 구축</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 타임라인 아이템 5 - 다양한 산업 경험 -->
-                        <div class="timeline-item">
-                            <div class="timeline-marker bg-secondary"></div>
-                            <div class="timeline-content">
-                                <div class="timeline-header">
-                                    <h5 class="mb-1">2016년 - 2019년</h5>
-                                    <p class="text-muted mb-0">다양한 산업 분야 경험</p>
-                                </div>
-                                <div class="timeline-body">
-                                    <p>전기/전자, 제조, 금융 등 다양한 산업에서 도메인 전문성을 축적</p>
-                                    <ul class="list-unstyled">
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> <strong>KB생명보험</strong> - 금융영업 (2년, 투자증권/손해보험/생명보험)</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> <strong>코히런트코리아</strong> - 테스트엔지니어 (삼성/LG 디스플레이 Eximer Laser 장비)</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> <strong>세종기업</strong> - 해외플랜트 (아부다비 BNPP 원자력발전소 전기시운전)</li>
-                                        <li><i class="bi bi-check-circle-fill text-success"></i> <strong>LG이노텍</strong> - PCB제조 (반도체 공정 중 노광업무, 42공정)</li>
-                                    </ul>
-                                </div>
+                            
+                            <div className="flex items-center gap-1">
+                                {screens.map((screen, index) => (
+                                    <React.Fragment key={screen.id}>
+                                        <button
+                                            onClick={() => { 
+                                                setCurrentScreen(index); 
+                                                setSelectedElement(null); 
+                                                setHighlightedLaw(null);
+                                                setViolations([]);
+                                            }}
+                                            className={`px-2 py-1 rounded text-xs font-medium transition-all ${
+                                                currentScreen === index
+                                                    ? 'bg-blue-600 text-white'
+                                                    : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                                            }`}
+                                        >
+                                            {screen.title}
+                                        </button>
+                                        {index < screens.length - 1 && (
+                                            <svg className="w-3 h-3 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        )}
+                                    </React.Fragment>
+                                ))}
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- 연락처 섹션 -->
-    <section id="contact" class="py-5 bg-dark text-white">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 mx-auto text-center">
-                    <h2 class="section-title mb-4">연락처</h2>
-                    <p class="lead mb-5">새로운 기회나 협업에 관심이 있으시면 언제든 연락 부탁드립니다.</p>
-                    
-                    <div class="row">
-                        <div class="col-md-4 mb-4">
-                            <div class="contact-item">
-                                <i class="bi bi-envelope display-6 text-primary mb-3"></i>
-                                <h5>이메일</h5>
-                                <p>coejrqud3@gmail.com</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-4">
-                            <div class="contact-item">
-                                <i class="bi bi-telephone display-6 text-primary mb-3"></i>
-                                <h5>전화</h5>
-                                <p>010-5558-1512</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-4">
-                            <div class="contact-item">
-                                <i class="bi bi-linkedin display-6 text-primary mb-3"></i>
-                                <h5>LinkedIn</h5>
-                                <p><a href="javascript:void(0)" class="text-decoration-none">LinkedIn 프로필</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                    {/* Main Content */}
+                    <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-0 overflow-hidden">
+                        {/* Left Panel - App Wireframe */}
+                        <div className="bg-gray-850 p-4 flex flex-col border-r border-gray-800 overflow-hidden">
+                            <div className="text-xs text-gray-400 mb-2 flex-shrink-0">앱 화면</div>
+                            
+                            <div className="bg-gray-900 rounded-2xl p-3 max-w-xs mx-auto border-2 border-gray-700 flex-1 flex flex-col overflow-hidden">
+                                <div className="flex justify-between text-xs text-gray-500 mb-2 px-1 flex-shrink-0">
+                                    <span>9:41</span>
+                                    <span>●●●</span>
+                                </div>
+                                
+                                <div className="bg-gray-800 rounded-lg p-2 mb-2 text-center flex-shrink-0">
+                                    <span className="font-medium text-sm">{currentScreenData.title}</span>
+                                </div>
 
-    <!-- 프로젝트 상세 모달 -->
-    <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="projectModalLabel">프로젝트 상세정보</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="modalContent">
-                    <!-- 프로젝트 상세 내용이 여기에 동적으로 로드됩니다 -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                    <a href="#" class="btn btn-primary" id="modalViewMore" target="_blank">더 보기</a>
-                </div>
-            </div>
-        </div>
-    </div>
+                                <div className="space-y-2 flex-1 overflow-y-auto scrollbar-thin">
+                                    {currentScreen === 3 && (
+                                        <div className="flex justify-center mb-2">
+                                            <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                                                <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    )}
+                                    
+                                    {currentScreenData.elements.map((element) => (
+                                        <div
+                                            key={element.id}
+                                            onClick={() => {
+                                                handleElementClick(element);
+                                                if (element.type === 'checkbox') {
+                                                    handleCheckboxToggle(element);
+                                                }
+                                            }}
+                                            className={`p-2 rounded-lg cursor-pointer transition-all ${
+                                                selectedElement === element.id
+                                                    ? 'bg-blue-600 bg-opacity-30 border-2 border-blue-500'
+                                                    : 'bg-gray-800 hover:bg-gray-700 border-2 border-transparent'
+                                            } ${element.required && !checkboxStates[element.id] && element.type === 'checkbox' ? 'border-l-2 border-l-red-500' : ''}`}
+                                        >
+                                            {element.type === 'checkbox' && (
+                                                <div className="flex items-center gap-2">
+                                                    <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
+                                                        checkboxStates[element.id] 
+                                                            ? 'border-blue-500 bg-blue-500' 
+                                                            : element.required 
+                                                                ? 'border-red-400' 
+                                                                : 'border-gray-500'
+                                                    }`}>
+                                                        {checkboxStates[element.id] && (
+                                                            <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                                            </svg>
+                                                        )}
+                                                    </div>
+                                                    <span className={`text-xs ${element.required && !checkboxStates[element.id] ? 'text-red-300' : ''}`}>
+                                                        {element.label}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            
+                                            {(element.type === 'input' || element.type === 'select') && (
+                                                <div>
+                                                    <div className="text-xs text-gray-400 mb-0.5">{element.label}</div>
+                                                    <div className="text-xs text-gray-500">{element.placeholder}</div>
+                                                </div>
+                                            )}
+                                            
+                                            {element.type === 'otp' && (
+                                                <div className="text-center">
+                                                    <div className="text-xs text-gray-400 mb-1">{element.label}</div>
+                                                    <div className="text-lg tracking-widest text-gray-500">{element.placeholder}</div>
+                                                </div>
+                                            )}
+                                            
+                                            {element.type === 'timer' && (
+                                                <div className="text-center">
+                                                    <div className="text-xs text-gray-400">{element.label}</div>
+                                                    <div className="text-base text-red-400 font-mono">{element.placeholder}</div>
+                                                </div>
+                                            )}
+                                            
+                                            {element.type === 'link' && (
+                                                <div className="text-center">
+                                                    <span className="text-xs text-blue-400 underline">{element.label}</span>
+                                                </div>
+                                            )}
+                                            
+                                            {element.type === 'result' && (
+                                                <div className="flex justify-between">
+                                                    <span className="text-xs text-gray-400">{element.label}</span>
+                                                    <span className="text-xs font-medium">{element.placeholder}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
 
-    <!-- AI 챗봇 모드 토글 버튼 (우측 하단) -->
-    <button id="chatToggle" class="btn btn-primary position-fixed" style="bottom: 6rem; right: 2rem; z-index: 1001; border-radius: 50%; width: 60px; height: 60px; box-shadow: 0 4px 20px rgba(0,123,255,0.4);">
-        <i class="bi bi-robot" style="font-size: 1.5rem;"></i>
-    </button>
-
-    <!-- AI 채팅 인터페이스 -->
-    <div id="chatInterface" class="position-fixed" style="bottom: 2rem; right: 2rem; width: 400px; height: 600px; z-index: 1000; display: none;">
-        <div class="card border-0 shadow-lg h-100" style="border-radius: 1rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-            <!-- 채팅 헤더 -->
-            <div class="card-header bg-transparent border-0 text-white p-3">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div class="d-flex align-items-center">
-                        <div class="position-relative me-3">
-                            <img src="https://ui-avatars.com/api/?name=AI+Bot&background=ffffff&color=667eea&size=40&bold=true" 
-                                 class="rounded-circle" width="40" height="40" alt="AI Bot">
-                            <span class="position-absolute bottom-0 end-0 badge bg-success rounded-pill" style="width: 12px; height: 12px;"></span>
-                        </div>
-                        <div>
-                            <h6 class="mb-0 fw-bold">AI 면접관 세키봇</h6>
-                            <small class="opacity-75">온라인 • 즉시 응답</small>
-                        </div>
-                    </div>
-                    <button class="btn btn-sm btn-outline-light" id="chatClose">
-                        <i class="bi bi-x-lg"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- 채팅 메시지 영역 -->
-            <div class="card-body bg-white p-0 overflow-hidden" style="border-radius: 0 0 1rem 1rem;">
-                <div id="chatMessages" class="h-100 overflow-auto p-3" style="max-height: 450px;">
-                    <!-- 초기 메시지 -->
-                    <div class="message bot-message mb-3">
-                        <div class="d-flex align-items-start">
-                            <img src="https://ui-avatars.com/api/?name=AI&background=667eea&color=ffffff&size=32&bold=true" 
-                                 class="rounded-circle me-2 flex-shrink-0" width="32" height="32" alt="AI">
-                            <div class="message-content bg-light p-2 rounded-3 position-relative">
-                                <div class="typing-indicator">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
+                                <button 
+                                    onClick={handleNextScreen}
+                                    disabled={currentScreen === 0 && !allRequiredChecked}
+                                    className={`w-full rounded-lg py-2 mt-2 text-sm font-medium transition-colors flex-shrink-0 ${
+                                        currentScreen === 0 && !allRequiredChecked
+                                            ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                                            : 'bg-blue-600 text-white hover:bg-blue-700'
+                                    }`}
+                                >
+                                    {currentScreenData.button}
+                                </button>
+                                
+                                <div className="flex justify-center mt-2 flex-shrink-0">
+                                    <div className="w-20 h-1 bg-gray-600 rounded-full"></div>
                                 </div>
                             </div>
+                            
+                            {currentScreen === 0 && !allRequiredChecked && (
+                                <div className="mt-2 text-center text-xs text-red-400">
+                                    필수 항목에 동의해야 다음으로 넘어갈 수 있습니다
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Right Panel - Legal References */}
+                        <div className="bg-gray-800 p-4 flex flex-col overflow-hidden">
+                            <div className="text-xs text-gray-400 mb-2 flex-shrink-0">법적 근거</div>
+                            
+                            {violations.length > 0 && (
+                                <div className="mb-3 p-3 bg-red-900 bg-opacity-50 border border-red-500 rounded-lg flex-shrink-0">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <svg className="w-4 h-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                        </svg>
+                                        <span className="text-sm font-medium text-red-300">위법사항 경고</span>
+                                    </div>
+                                    {violations.map((violation, idx) => (
+                                        <div key={idx} className="text-xs text-red-200 mb-1">
+                                            <span className="font-medium">{violation.title}:</span> {violation.violationText}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                            
+                            <div className="space-y-3 overflow-y-auto flex-1 scrollbar-thin">
+                                {currentLaws.map((lawId) => {
+                                    const law = laws[lawId];
+                                    const isHighlighted = highlightedLaw && highlightedLaw.includes(lawId);
+                                    
+                                    return (
+                                        <div
+                                            key={lawId}
+                                            ref={el => lawRefs.current[lawId] = el}
+                                            className={`p-3 rounded-lg transition-all ${
+                                                isHighlighted
+                                                    ? 'bg-blue-600 bg-opacity-30 border-2 border-blue-500'
+                                                    : 'bg-gray-900 border-2 border-transparent'
+                                            }`}
+                                        >
+                                            <div className="flex items-start justify-between mb-2">
+                                                <div>
+                                                    <h3 className="font-medium text-white text-sm">{law.title}</h3>
+                                                    <p className="text-xs text-gray-400">{law.subtitle}</p>
+                                                </div>
+                                                {isHighlighted && (
+                                                    <span className="px-1.5 py-0.5 bg-blue-600 rounded text-xs">적용</span>
+                                                )}
+                                            </div>
+                                            
+                                            <p className="text-xs text-gray-300 mb-2 leading-relaxed">
+                                                {law.description}
+                                            </p>
+                                            
+                                            <div className="border-t border-gray-700 pt-2">
+                                                <div className="text-xs text-gray-400 mb-1">검증 체크포인트</div>
+                                                <div className="space-y-0.5">
+                                                    {law.checkpoints.map((checkpoint, idx) => (
+                                                        <div key={idx} className="flex items-center gap-1.5 text-xs">
+                                                            <span className="text-green-400">✓</span>
+                                                            <span className="text-gray-300">{checkpoint}</span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- 채팅 입력 영역 -->
-                <div class="border-top p-3">
-                    <div class="input-group">
-                        <input type="text" id="chatInput" class="form-control border-0 bg-light" 
-                               placeholder="메시지를 입력하세요..." disabled>
-                        <button class="btn btn-primary" id="chatSend" disabled>
-                            <i class="bi bi-send-fill"></i>
-                        </button>
-                    </div>
-                    <div class="mt-2">
-                        <div class="d-flex flex-wrap gap-1" id="quickReplies">
-                            <!-- 빠른 응답 버튼들이 여기에 동적 생성됩니다 -->
-                        </div>
+                    {/* Footer */}
+                    <div className="p-2 text-center text-gray-500 text-xs border-t border-gray-800 flex-shrink-0">
+                        <p>앱 화면의 요소를 클릭하면 해당 법적 근거가 하이라이트되고 자동 스크롤됩니다</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <footer class="bg-dark text-white py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <p class="mb-0">&copy; 2024 정보보안 전문가 포트폴리오. All rights reserved.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+            );
+        }
 
-    <!-- Bootstrap 5 JS CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <!-- 커스텀 JS -->
-    <script src="script.js"></script>
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<ComplianceFlowPortfolio />);
+    </script>
 </body>
 </html>
