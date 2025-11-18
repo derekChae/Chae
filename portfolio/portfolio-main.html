@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Portfolio - 정보보안 전문가</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #111827;
+            color: #ffffff;
+        }
+        
+        .app-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header */
+        .main-header {
+            padding: 20px 32px;
+            border-bottom: 1px solid #374151;
+            background-color: #1f2937;
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3b82f6;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+        
+        .nav-link {
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: #ffffff;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px;
+            width: 100%;
+        }
+        
+        /* Dashboard View */
+        .dashboard-header {
+            margin-bottom: 32px;
+        }
+        
+        .dashboard-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .dashboard-subtitle {
+            color: #9ca3af;
+            font-size: 16px;
+        }
+        
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .stat-card {
+            background-color: #1f2937;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #374151;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #3b82f6;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+        
+        /* Project Grid */
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .project-card {
+            background-color: #1f2937;
+            border-radius: 12px;
+            border: 1px solid #374151;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .project-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+        }
+        
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        
+        .project-company {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .project-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .badge-active {
+            background-color: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+        }
+        
+        .badge-completed {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+        }
+        
+        .project-title {
+            font-size: 14px;
+            color: #9ca3af;
+            margin-bottom: 16px;
+        }
+        
+        .project-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 16px;
+        }
+        
+        .project-flows {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .flow-tag {
+            padding: 4px 8px;
+            background-color: #374151;
+            border-radius: 4px;
+            font-size: 11px;
+            color: #d1d5db;
+        }
+        
+        /* Project Detail View */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #9ca3af;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 24px;
+            transition: color 0.2s;
+        }
+        
+        .back-button:hover {
+            color: #ffffff;
+        }
+        
+        .project-detail-header {
+            margin-bottom: 32px;
+        }
+        
+        .project-detail-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .project-detail-subtitle {
+            color: #9ca3af;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .project-info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .info-card {
+            background-color: #1f2937;
+            padding: 16px;
+            border-radius: 8px;
+        }
+        
+        .info-label {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 4px;
+        }
+        
+        .info-value {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        /* Flow List */
+        .flow-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .flow-item {
+            background-color: #1f2937;
+            border-radius: 12px;
+            border: 1px solid #374151;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .flow-item:hover {
+            border-color: #3b82f6;
+        }
+        
+        .flow-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .flow-item.disabled:hover {
+            border-color: #374151;
+        }
+        
+        .flow-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .flow-number {
+            width: 40px;
+            height: 40px;
+            background-color: #374151;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .flow-number.active {
+            background-color: #3b82f6;
+        }
+        
+        .flow-details h3 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .flow-details p {
+            font-size: 13px;
+            color: #9ca3af;
+        }
+        
+        .flow-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .status-ready {
+            background-color: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+        }
+        
+        .status-wip {
+            background-color: rgba(234, 179, 8, 0.2);
+            color: #facc15;
+        }
+        
+        .status-planned {
+            background-color: rgba(107, 114, 128, 0.2);
+            color: #9ca3af;
+        }
+        
+        .flow-arrow {
+            color: #6b7280;
+            font-size: 20px;
+        }
+        
+        /* Footer */
+        .main-footer {
+            padding: 20px 32px;
+            border-top: 1px solid #374151;
+            text-align: center;
+            color: #6b7280;
+            font-size: 12px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .project-info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState } = React;
+
+        function PortfolioDashboard() {
+            const [currentView, setCurrentView] = useState('dashboard');
+            const [selectedProject, setSelectedProject] = useState(null);
+
+            const projects = [
+                {
+                    id: 'kt-telecom',
+                    company: 'K사 (통신)',
+                    title: '개인정보보호법 보안 검증',
+                    period: '2024.11 ~ 진행중',
+                    role: 'PL / 보안검증 담당',
+                    status: 'active',
+                    description: '통신사 개인정보 처리 시스템 전반에 대한 컴플라이언스 검증',
+                    flows: [
+                        { id: 'auth', number: '01', title: '본인인증 플로우', description: '본인확인서비스 개인정보 처리 검증', status: 'ready', url: 'compliance-portfolio-final.html' },
+                        { id: 'transfer', number: '02', title: '국외이전', description: '개인정보 국외이전 적법성 검토', status: 'wip' },
+                        { id: 'infra', number: '03', title: '인프라 진단', description: '개인정보처리시스템 기술적 보호조치', status: 'planned' },
+                        { id: 'retention', number: '04', title: '보유/파기', description: '개인정보 보유기간 및 파기절차 검증', status: 'planned' }
+                    ]
+                },
+                {
+                    id: 'lg-aws',
+                    company: 'LG전자',
+                    title: 'AWS 클라우드 인프라 보안',
+                    period: '2023.01 ~ 2024.08',
+                    role: 'Senior Consultant',
+                    status: 'completed',
+                    description: 'AWS 클라우드 환경 보안 아키텍처 설계 및 취약점 진단',
+                    flows: [
+                        { id: 'iam', number: '01', title: 'IAM 권한관리', description: 'AWS IAM 정책 및 권한 최소화 검토', status: 'planned' },
+                        { id: 'network', number: '02', title: '네트워크 보안', description: 'VPC, Security Group, NACL 설정 검증', status: 'planned' },
+                        { id: 'logging', number: '03', title: '로깅/모니터링', description: 'CloudTrail, CloudWatch 설정 점검', status: 'planned' },
+                        { id: 'encryption', number: '04', title: '암호화', description: 'KMS, S3 암호화 설정 검증', status: 'planned' }
+                    ]
+                },
+                {
+                    id: 'khnp',
+                    company: '한국수력원자력',
+                    title: '보안성 검토',
+                    period: '2022.06 ~ 2022.08',
+                    role: 'Security Consultant',
+                    status: 'completed',
+                    description: '주요정보통신기반시설 취약점 분석 및 보안성 검토',
+                    flows: [
+                        { id: 'vuln', number: '01', title: '취약점 진단', description: '시스템/네트워크/웹 취약점 분석', status: 'planned' },
+                        { id: 'pentest', number: '02', title: '모의해킹', description: '침투 테스트 및 시나리오 기반 공격', status: 'planned' },
+                        { id: 'compliance', number: '03', title: '컴플라이언스', description: '주요정보통신기반시설 보호지침 준수', status: 'planned' }
+                    ]
+                },
+                {
+                    id: 'finance',
+                    company: 'KB손해보험',
+                    title: '금융보안 컨설팅',
+                    period: '2021.03 ~ 2022.05',
+                    role: 'Security Consultant',
+                    status: 'completed',
+                    description: '전자금융감독규정 기반 보안성 심의 및 취약점 진단',
+                    flows: [
+                        { id: 'isms', number: '01', title: 'ISMS-P', description: '정보보호 및 개인정보보호 관리체계 인증', status: 'planned' },
+                        { id: 'finance-compliance', number: '02', title: '전자금융감독규정', description: '금융보안 컴플라이언스 점검', status: 'planned' }
+                    ]
+                }
+            ];
+
+            const stats = {
+                totalProjects: projects.length,
+                totalFlows: projects.reduce((acc, p) => acc + p.flows.length, 0),
+                yearsExperience: '6+',
+                certifications: 'AWS, ISMS'
+            };
+
+            const handleProjectClick = (project) => {
+                setSelectedProject(project);
+                setCurrentView('project-detail');
+            };
+
+            const handleBackClick = () => {
+                setCurrentView('dashboard');
+                setSelectedProject(null);
+            };
+
+            const handleFlowClick = (flow) => {
+                if (flow.status === 'ready' && flow.url) {
+                    window.location.href = flow.url;
+                }
+            };
+
+            return (
+                <div className="app-container">
+                    {/* Header */}
+                    <header className="main-header">
+                        <div className="header-content">
+                            <div className="logo">Security Portfolio</div>
+                            <nav className="nav-links">
+                                <span 
+                                    className={`nav-link ${currentView === 'dashboard' ? 'active' : ''}`}
+                                    onClick={() => { setCurrentView('dashboard'); setSelectedProject(null); }}
+                                >
+                                    프로젝트
+                                </span>
+                                <span className="nav-link">스킬</span>
+                                <span className="nav-link">연락처</span>
+                            </nav>
+                        </div>
+                    </header>
+
+                    {/* Main Content */}
+                    <main className="main-content">
+                        {currentView === 'dashboard' && (
+                            <>
+                                {/* Dashboard Header */}
+                                <div className="dashboard-header">
+                                    <h1 className="dashboard-title">프로젝트 포트폴리오</h1>
+                                    <p className="dashboard-subtitle">
+                                        정보보안 컨설턴트 | 개인정보보호 · 클라우드 보안 · 모의해킹
+                                    </p>
+                                </div>
+
+                                {/* Stats */}
+                                <div className="stats-grid">
+                                    <div className="stat-card">
+                                        <div className="stat-value">{stats.totalProjects}</div>
+                                        <div className="stat-label">총 프로젝트</div>
+                                    </div>
+                                    <div className="stat-card">
+                                        <div className="stat-value">{stats.totalFlows}</div>
+                                        <div className="stat-label">검증 플로우</div>
+                                    </div>
+                                    <div className="stat-card">
+                                        <div className="stat-value">{stats.yearsExperience}</div>
+                                        <div className="stat-label">경력 (년)</div>
+                                    </div>
+                                    <div className="stat-card">
+                                        <div className="stat-value">{stats.certifications}</div>
+                                        <div className="stat-label">자격증</div>
+                                    </div>
+                                </div>
+
+                                {/* Project Grid */}
+                                <h2 className="section-title">프로젝트 목록</h2>
+                                <div className="project-grid">
+                                    {projects.map(project => (
+                                        <div 
+                                            key={project.id} 
+                                            className="project-card"
+                                            onClick={() => handleProjectClick(project)}
+                                        >
+                                            <div className="project-header">
+                                                <span className="project-company">{project.company}</span>
+                                                <span className={`project-badge ${project.status === 'active' ? 'badge-active' : 'badge-completed'}`}>
+                                                    {project.status === 'active' ? '진행중' : '완료'}
+                                                </span>
+                                            </div>
+                                            <div className="project-title">{project.title}</div>
+                                            <div className="project-meta">
+                                                <span>📅 {project.period}</span>
+                                                <span>👤 {project.role}</span>
+                                            </div>
+                                            <div className="project-flows">
+                                                {project.flows.slice(0, 3).map(flow => (
+                                                    <span key={flow.id} className="flow-tag">{flow.title}</span>
+                                                ))}
+                                                {project.flows.length > 3 && (
+                                                    <span className="flow-tag">+{project.flows.length - 3}</span>
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        )}
+
+                        {currentView === 'project-detail' && selectedProject && (
+                            <>
+                                {/* Back Button */}
+                                <div className="back-button" onClick={handleBackClick}>
+                                    ← 프로젝트 목록으로
+                                </div>
+
+                                {/* Project Detail Header */}
+                                <div className="project-detail-header">
+                                    <h1 className="project-detail-title">{selectedProject.company}</h1>
+                                    <p className="project-detail-subtitle">{selectedProject.title}</p>
+                                    <p style={{color: '#9ca3af', fontSize: '14px'}}>{selectedProject.description}</p>
+                                </div>
+
+                                {/* Project Info */}
+                                <div className="project-info-grid">
+                                    <div className="info-card">
+                                        <div className="info-label">수행 기간</div>
+                                        <div className="info-value">{selectedProject.period}</div>
+                                    </div>
+                                    <div className="info-card">
+                                        <div className="info-label">담당 역할</div>
+                                        <div className="info-value">{selectedProject.role}</div>
+                                    </div>
+                                    <div className="info-card">
+                                        <div className="info-label">검증 플로우</div>
+                                        <div className="info-value">{selectedProject.flows.length}개</div>
+                                    </div>
+                                </div>
+
+                                {/* Flow List */}
+                                <h2 className="section-title">검증 플로우</h2>
+                                <div className="flow-list">
+                                    {selectedProject.flows.map(flow => (
+                                        <div 
+                                            key={flow.id} 
+                                            className={`flow-item ${flow.status !== 'ready' ? 'disabled' : ''}`}
+                                            onClick={() => handleFlowClick(flow)}
+                                        >
+                                            <div className="flow-info">
+                                                <div className={`flow-number ${flow.status === 'ready' ? 'active' : ''}`}>
+                                                    {flow.number}
+                                                </div>
+                                                <div className="flow-details">
+                                                    <h3>{flow.title}</h3>
+                                                    <p>{flow.description}</p>
+                                                </div>
+                                            </div>
+                                            <div className="flow-status">
+                                                <span className={`status-badge status-${flow.status}`}>
+                                                    {flow.status === 'ready' ? '완료' : flow.status === 'wip' ? '작업중' : '예정'}
+                                                </span>
+                                                {flow.status === 'ready' && <span className="flow-arrow">→</span>}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        )}
+                    </main>
+
+                    {/* Footer */}
+                    <footer className="main-footer">
+                        © 2024 Security Portfolio. All rights reserved.
+                    </footer>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<PortfolioDashboard />);
+    </script>
+</body>
+</html>
