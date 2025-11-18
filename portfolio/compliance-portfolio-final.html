@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>컴플라이언스 플로우 검증 - Security Portfolio</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #111827;
+            color: #ffffff;
+        }
+        
+        .app-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        /* Header */
+        .header {
+            padding: 16px;
+            border-bottom: 1px solid #374151;
+            flex-shrink: 0;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .header-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        
+        .header-subtitle {
+            color: #9ca3af;
+            font-size: 12px;
+        }
+        
+        /* Navigation */
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .nav-button {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .nav-button.active {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
+        
+        .nav-button.inactive {
+            background-color: #1f2937;
+            color: #9ca3af;
+        }
+        
+        .nav-button.inactive:hover {
+            background-color: #374151;
+        }
+        
+        .nav-arrow {
+            color: #4b5563;
+            font-size: 12px;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+        }
+        
+        /* Left Panel */
+        .left-panel {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #374151;
+            overflow: hidden;
+        }
+        
+        .panel-label {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 8px;
+            flex-shrink: 0;
+        }
+        
+        /* Phone Mockup */
+        .phone-mockup {
+            background-color: #111827;
+            border-radius: 16px;
+            padding: 12px;
+            max-width: 320px;
+            margin: 0 auto;
+            border: 2px solid #374151;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .phone-status {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 8px;
+            padding: 0 4px;
+            flex-shrink: 0;
+        }
+        
+        .phone-header {
+            background-color: #1f2937;
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+            margin-bottom: 8px;
+            flex-shrink: 0;
+        }
+        
+        .phone-header-title {
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .phone-content {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        /* Elements */
+        .element-item {
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background-color: #1f2937;
+            border: 2px solid transparent;
+        }
+        
+        .element-item:hover {
+            background-color: #374151;
+        }
+        
+        .element-item.selected {
+            background-color: rgba(37, 99, 235, 0.3);
+            border-color: #3b82f6;
+        }
+        
+        .element-item.required-unchecked {
+            border-left: 2px solid #f87171;
+        }
+        
+        /* Checkbox */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .checkbox-box {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            border: 2px solid #6b7280;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        
+        .checkbox-box.checked {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+        
+        .checkbox-box.required {
+            border-color: #f87171;
+        }
+        
+        .checkbox-label {
+            font-size: 12px;
+        }
+        
+        .checkbox-label.required-text {
+            color: #fca5a5;
+        }
+        
+        /* Input fields */
+        .input-label {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 2px;
+        }
+        
+        .input-placeholder {
+            font-size: 12px;
+            color: #6b7280;
+        }
+        
+        /* OTP */
+        .otp-container {
+            text-align: center;
+        }
+        
+        .otp-label {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 4px;
+        }
+        
+        .otp-dots {
+            font-size: 18px;
+            letter-spacing: 8px;
+            color: #6b7280;
+        }
+        
+        /* Timer */
+        .timer-container {
+            text-align: center;
+        }
+        
+        .timer-label {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        
+        .timer-value {
+            font-size: 16px;
+            color: #f87171;
+            font-family: monospace;
+        }
+        
+        /* Link */
+        .link-container {
+            text-align: center;
+        }
+        
+        .link-text {
+            font-size: 12px;
+            color: #60a5fa;
+            text-decoration: underline;
+        }
+        
+        /* Result */
+        .result-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .result-label {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        
+        .result-value {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* Success icon */
+        .success-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+        }
+        
+        /* Button */
+        .action-button {
+            width: 100%;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            margin-top: 8px;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        
+        .action-button.enabled {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
+        
+        .action-button.enabled:hover {
+            background-color: #1d4ed8;
+        }
+        
+        .action-button.disabled {
+            background-color: #4b5563;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+        
+        /* Home indicator */
+        .home-indicator {
+            display: flex;
+            justify-content: center;
+            margin-top: 8px;
+            flex-shrink: 0;
+        }
+        
+        .home-indicator-bar {
+            width: 80px;
+            height: 4px;
+            background-color: #4b5563;
+            border-radius: 2px;
+        }
+        
+        /* Required notice */
+        .required-notice {
+            margin-top: 8px;
+            text-align: center;
+            font-size: 12px;
+            color: #f87171;
+        }
+        
+        /* Right Panel */
+        .right-panel {
+            background-color: #1f2937;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        /* Violation alert */
+        .violation-alert {
+            margin-bottom: 12px;
+            padding: 12px;
+            background-color: rgba(127, 29, 29, 0.5);
+            border: 1px solid #dc2626;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        
+        .violation-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .violation-icon {
+            color: #f87171;
+        }
+        
+        .violation-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #fca5a5;
+        }
+        
+        .violation-item {
+            font-size: 12px;
+            color: #fecaca;
+            margin-bottom: 4px;
+        }
+        
+        .violation-item strong {
+            font-weight: 500;
+        }
+        
+        /* Law cards */
+        .law-cards {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .law-card {
+            padding: 12px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            background-color: #111827;
+            border: 2px solid transparent;
+        }
+        
+        .law-card.highlighted {
+            background-color: rgba(37, 99, 235, 0.3);
+            border-color: #3b82f6;
+        }
+        
+        .law-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .law-title {
+            font-weight: 500;
+            color: #ffffff;
+            font-size: 14px;
+        }
+        
+        .law-subtitle {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        
+        .law-badge {
+            padding: 2px 6px;
+            background-color: #2563eb;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .law-description {
+            font-size: 12px;
+            color: #d1d5db;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        .law-checkpoints {
+            border-top: 1px solid #374151;
+            padding-top: 8px;
+        }
+        
+        .checkpoints-title {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 4px;
+        }
+        
+        .checkpoint-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            margin-bottom: 2px;
+        }
+        
+        .checkpoint-icon {
+            color: #4ade80;
+        }
+        
+        .checkpoint-text {
+            color: #d1d5db;
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 8px;
+            text-align: center;
+            font-size: 12px;
+            color: #6b7280;
+            border-top: 1px solid #374151;
+            flex-shrink: 0;
+        }
+        
+        /* Scrollbar */
+        .phone-content::-webkit-scrollbar,
+        .law-cards::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .phone-content::-webkit-scrollbar-track,
+        .law-cards::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+        
+        .phone-content::-webkit-scrollbar-thumb,
+        .law-cards::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 2px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .left-panel {
+                border-right: none;
+                border-bottom: 1px solid #374151;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useRef } = React;
+
+        function ComplianceFlowPortfolio() {
+            const [currentScreen, setCurrentScreen] = useState(0);
+            const [selectedElement, setSelectedElement] = useState(null);
+            const [highlightedLaw, setHighlightedLaw] = useState(null);
+            const [checkboxStates, setCheckboxStates] = useState({});
+            const [violations, setViolations] = useState([]);
+            const lawRefs = useRef({});
+
+            const screens = [
+                {
+                    id: 'consent',
+                    title: '약관동의',
+                    elements: [
+                        { id: 'all-agree', label: '전체동의 (선택항목 포함)', type: 'checkbox', laws: ['law-22'], required: false, isAllAgree: true },
+                        { id: 'required-1', label: '[필수] 개인정보 수집·이용 동의', type: 'checkbox', laws: ['law-15', 'law-22'], required: true },
+                        { id: 'required-2', label: '[필수] 고유식별정보 처리 동의', type: 'checkbox', laws: ['law-24'], required: true },
+                        { id: 'optional-1', label: '[선택] 마케팅 정보 수신 동의', type: 'checkbox', laws: ['law-50'], required: false }
+                    ],
+                    button: '동의하고 계속하기'
+                },
+                {
+                    id: 'identity',
+                    title: '본인인증',
+                    elements: [
+                        { id: 'name', label: '이름', type: 'input', placeholder: '홍길동', laws: ['law-15'], required: true },
+                        { id: 'ssn', label: '주민등록번호', type: 'input', placeholder: '900101 - 1******', laws: ['law-24', 'law-24-2'], required: true },
+                        { id: 'carrier', label: '통신사', type: 'select', placeholder: 'SKT / KT / LG U+', laws: ['law-32'], required: true },
+                        { id: 'phone', label: '휴대폰번호', type: 'input', placeholder: '010-1234-5678', laws: ['law-15'], required: true }
+                    ],
+                    button: '인증번호 요청'
+                },
+                {
+                    id: 'otp',
+                    title: '인증번호 확인',
+                    elements: [
+                        { id: 'otp-input', label: '인증번호 6자리', type: 'otp', placeholder: '● ● ● ● ● ●', laws: ['law-23-3', 'law-29'], required: true },
+                        { id: 'timer', label: '남은시간', type: 'timer', placeholder: '03:00', laws: ['law-29'], required: false },
+                        { id: 'resend', label: '인증번호 재전송', type: 'link', laws: ['law-29'], required: false }
+                    ],
+                    button: '인증완료'
+                },
+                {
+                    id: 'complete',
+                    title: '인증완료',
+                    elements: [
+                        { id: 'result-name', label: '이름', type: 'result', placeholder: '홍**', laws: ['law-30'], required: false },
+                        { id: 'result-birth', label: '생년월일', type: 'result', placeholder: '1990.**.**', laws: ['law-30'], required: false },
+                        { id: 'result-phone', label: '휴대폰', type: 'result', placeholder: '010-****-5678', laws: ['law-30', 'law-21'], required: false }
+                    ],
+                    button: '확인'
+                }
+            ];
+
+            const laws = {
+                'law-15': {
+                    id: 'law-15',
+                    title: '개인정보보호법 제15조',
+                    subtitle: '개인정보의 수집·이용',
+                    description: '개인정보처리자는 정보주체의 동의를 받은 경우 개인정보를 수집할 수 있으며, 그 수집 목적의 범위에서 이용할 수 있다.',
+                    checkpoints: ['수집 목적 명시 여부', '수집 항목 고지 여부', '보유기간 안내 여부'],
+                    violationText: '개인정보 수집·이용 동의 없이 정보를 수집하는 것은 위법입니다.'
+                },
+                'law-22': {
+                    id: 'law-22',
+                    title: '개인정보보호법 제22조',
+                    subtitle: '동의를 받는 방법',
+                    description: '개인정보처리자는 동의를 받을 때에는 각각의 동의 사항을 구분하여 정보주체가 이를 명확하게 인지할 수 있도록 알리고 각각 동의를 받아야 한다.',
+                    checkpoints: ['필수/선택 동의 분리', '개별 동의 획득 방식', '동의 거부권 안내'],
+                    violationText: '동의 사항을 구분하지 않고 일괄 동의를 받는 것은 위법입니다.'
+                },
+                'law-24': {
+                    id: 'law-24',
+                    title: '개인정보보호법 제24조',
+                    subtitle: '고유식별정보의 처리 제한',
+                    description: '개인정보처리자는 법령에서 구체적으로 고유식별정보의 처리를 요구하거나 허용하는 경우에 고유식별정보를 처리할 수 있다.',
+                    checkpoints: ['처리 법적 근거 확인', '별도 동의 획득 여부', '암호화 조치 여부'],
+                    violationText: '고유식별정보 처리 동의 없이 주민번호를 수집하는 것은 위법입니다.'
+                },
+                'law-24-2': {
+                    id: 'law-24-2',
+                    title: '개인정보보호법 제24조의2',
+                    subtitle: '주민등록번호 처리의 제한',
+                    description: '개인정보처리자는 법령에서 구체적으로 주민등록번호의 처리를 요구하거나 허용한 경우를 제외하고는 주민등록번호를 처리할 수 없다.',
+                    checkpoints: ['법적 처리 근거 존재', '대체수단 검토 여부', '최소 수집 원칙 준수'],
+                    violationText: '법적 근거 없이 주민등록번호를 수집하는 것은 위법입니다.'
+                },
+                'law-50': {
+                    id: 'law-50',
+                    title: '정보통신망법 제50조',
+                    subtitle: '영리목적의 광고성 정보 전송 제한',
+                    description: '누구든지 전자적 전송매체를 이용하여 영리목적의 광고성 정보를 전송하려면 그 수신자의 명시적인 사전 동의를 받아야 한다.',
+                    checkpoints: ['사전 동의 획득 여부', '수신거부 방법 안내', '발신자 정보 표시'],
+                    violationText: '마케팅 동의 없이 광고성 정보를 전송하는 것은 위법입니다.'
+                },
+                'law-32': {
+                    id: 'law-32',
+                    title: '신용정보법 제32조',
+                    subtitle: '본인확인기관',
+                    description: '본인확인기관은 본인확인서비스를 제공하기 위하여 개인정보를 수집·이용할 수 있다.',
+                    checkpoints: ['본인확인기관 지정 여부', 'CI/DI 생성 및 관리', '본인확인 결과 전송'],
+                    violationText: '지정되지 않은 기관이 본인확인 서비스를 제공하는 것은 위법입니다.'
+                },
+                'law-23-3': {
+                    id: 'law-23-3',
+                    title: '정보통신망법 제23조의3',
+                    subtitle: '본인확인기관의 지정 등',
+                    description: '방송통신위원회는 정보통신서비스 제공자의 본인확인업무를 지원하기 위하여 본인확인기관을 지정할 수 있다.',
+                    checkpoints: ['지정된 기관 사용 여부', '인증 유효시간 설정', '인증정보 암호화 전송'],
+                    violationText: '인증 유효시간을 설정하지 않는 것은 보안 위반입니다.'
+                },
+                'law-29': {
+                    id: 'law-29',
+                    title: '개인정보보호법 제29조',
+                    subtitle: '안전조치의무',
+                    description: '개인정보처리자는 개인정보가 분실·도난·유출·위조·변조 또는 훼손되지 아니하도록 안전성 확보에 필요한 기술적·관리적 및 물리적 조치를 하여야 한다.',
+                    checkpoints: ['인증정보 암호화', '접근권한 관리', '접속기록 보관'],
+                    violationText: '안전조치 없이 개인정보를 처리하는 것은 위법입니다.'
+                },
+                'law-21': {
+                    id: 'law-21',
+                    title: '개인정보보호법 제21조',
+                    subtitle: '개인정보의 파기',
+                    description: '개인정보처리자는 보유기간의 경과, 개인정보의 처리 목적 달성 등 그 개인정보가 불필요하게 되었을 때에는 지체 없이 그 개인정보를 파기하여야 한다.',
+                    checkpoints: ['목적 달성 후 즉시 파기', '파기 방법 적정성', '파기 기록 관리'],
+                    violationText: '목적 달성 후 개인정보를 파기하지 않는 것은 위법입니다.'
+                },
+                'law-30': {
+                    id: 'law-30',
+                    title: '개인정보보호법 제30조',
+                    subtitle: '개인정보 처리방침의 수립 및 공개',
+                    description: '개인정보처리자는 개인정보의 처리 목적, 처리 및 보유 기간, 제3자 제공에 관한 사항 등을 포함한 개인정보 처리방침을 정하여야 한다.',
+                    checkpoints: ['마스킹 처리 적용', '최소 정보 표시', '처리방침 공개'],
+                    violationText: '개인정보 처리방침을 공개하지 않는 것은 위법입니다.'
+                }
+            };
+
+            const currentScreenData = screens[currentScreen];
+            const requiredElements = currentScreenData.elements.filter(el => el.required && el.type === 'checkbox');
+            const allRequiredChecked = requiredElements.every(el => checkboxStates[el.id]);
+
+            const handleCheckboxToggle = (element) => {
+                if (element.isAllAgree) {
+                    const newState = !checkboxStates[element.id];
+                    const newCheckboxStates = { ...checkboxStates };
+                    currentScreenData.elements.forEach(el => {
+                        if (el.type === 'checkbox') {
+                            newCheckboxStates[el.id] = newState;
+                        }
+                    });
+                    setCheckboxStates(newCheckboxStates);
+                } else {
+                    const newState = !checkboxStates[element.id];
+                    setCheckboxStates(prev => ({ ...prev, [element.id]: newState }));
+                    
+                    const allAgreeElement = currentScreenData.elements.find(el => el.isAllAgree);
+                    if (allAgreeElement) {
+                        const otherCheckboxes = currentScreenData.elements.filter(el => el.type === 'checkbox' && !el.isAllAgree);
+                        const allOthersChecked = otherCheckboxes.every(el => 
+                            el.id === element.id ? newState : checkboxStates[el.id]
+                        );
+                        setCheckboxStates(prev => ({ ...prev, [allAgreeElement.id]: allOthersChecked }));
+                    }
+                }
+            };
+
+            const handleElementClick = (element) => {
+                setSelectedElement(element.id);
+                setHighlightedLaw(element.laws);
+                
+                if (element.laws && element.laws.length > 0) {
+                    const firstLawId = element.laws[0];
+                    if (lawRefs.current[firstLawId]) {
+                        lawRefs.current[firstLawId].scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'center' 
+                        });
+                    }
+                }
+
+                if (element.type === 'checkbox' && element.required && !checkboxStates[element.id]) {
+                    const violationLaws = element.laws.map(lawId => ({
+                        ...laws[lawId],
+                        elementLabel: element.label
+                    }));
+                    setViolations(violationLaws);
+                } else {
+                    setViolations([]);
+                }
+            };
+
+            const handleNextScreen = () => {
+                if (currentScreen === 0 && !allRequiredChecked) {
+                    const uncheckedRequired = requiredElements.filter(el => !checkboxStates[el.id]);
+                    const violationLaws = uncheckedRequired.flatMap(el => 
+                        el.laws.map(lawId => ({
+                            ...laws[lawId],
+                            elementLabel: el.label
+                        }))
+                    );
+                    setViolations(violationLaws);
+                    return;
+                }
+                
+                if (currentScreen < screens.length - 1) {
+                    setCurrentScreen(prev => prev + 1);
+                    setSelectedElement(null);
+                    setHighlightedLaw(null);
+                    setViolations([]);
+                }
+            };
+
+            const currentLaws = [...new Set(currentScreenData.elements.flatMap(el => el.laws))];
+
+            return (
+                <div className="app-container">
+                    {/* Header */}
+                    <div className="header">
+                        <div className="header-content">
+                            <div>
+                                <h1 className="header-title">본인인증 앱 컴플라이언스 검증</h1>
+                                <p className="header-subtitle">K사 개인정보보호법 보안 검증 프로젝트</p>
+                            </div>
+                            
+                            <div className="nav-container">
+                                {screens.map((screen, index) => (
+                                    <React.Fragment key={screen.id}>
+                                        <button
+                                            onClick={() => { 
+                                                setCurrentScreen(index); 
+                                                setSelectedElement(null); 
+                                                setHighlightedLaw(null);
+                                                setViolations([]);
+                                            }}
+                                            className={`nav-button ${currentScreen === index ? 'active' : 'inactive'}`}
+                                        >
+                                            {screen.title}
+                                        </button>
+                                        {index < screens.length - 1 && (
+                                            <span className="nav-arrow">›</span>
+                                        )}
+                                    </React.Fragment>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Main Content */}
+                    <div className="main-content">
+                        {/* Left Panel - App Wireframe */}
+                        <div className="left-panel">
+                            <div className="panel-label">앱 화면</div>
+                            
+                            <div className="phone-mockup">
+                                <div className="phone-status">
+                                    <span>9:41</span>
+                                    <span>●●●</span>
+                                </div>
+                                
+                                <div className="phone-header">
+                                    <span className="phone-header-title">{currentScreenData.title}</span>
+                                </div>
+
+                                <div className="phone-content">
+                                    {currentScreen === 3 && (
+                                        <div className="success-icon">
+                                            <span style={{color: '#fff', fontSize: '20px'}}>✓</span>
+                                        </div>
+                                    )}
+                                    
+                                    {currentScreenData.elements.map((element) => (
+                                        <div
+                                            key={element.id}
+                                            onClick={() => {
+                                                handleElementClick(element);
+                                                if (element.type === 'checkbox') {
+                                                    handleCheckboxToggle(element);
+                                                }
+                                            }}
+                                            className={`element-item ${selectedElement === element.id ? 'selected' : ''} ${element.required && !checkboxStates[element.id] && element.type === 'checkbox' ? 'required-unchecked' : ''}`}
+                                        >
+                                            {element.type === 'checkbox' && (
+                                                <div className="checkbox-container">
+                                                    <div className={`checkbox-box ${checkboxStates[element.id] ? 'checked' : ''} ${element.required && !checkboxStates[element.id] ? 'required' : ''}`}>
+                                                        {checkboxStates[element.id] && <span style={{color: '#fff', fontSize: '10px'}}>✓</span>}
+                                                    </div>
+                                                    <span className={`checkbox-label ${element.required && !checkboxStates[element.id] ? 'required-text' : ''}`}>
+                                                        {element.label}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            
+                                            {(element.type === 'input' || element.type === 'select') && (
+                                                <div>
+                                                    <div className="input-label">{element.label}</div>
+                                                    <div className="input-placeholder">{element.placeholder}</div>
+                                                </div>
+                                            )}
+                                            
+                                            {element.type === 'otp' && (
+                                                <div className="otp-container">
+                                                    <div className="otp-label">{element.label}</div>
+                                                    <div className="otp-dots">{element.placeholder}</div>
+                                                </div>
+                                            )}
+                                            
+                                            {element.type === 'timer' && (
+                                                <div className="timer-container">
+                                                    <div className="timer-label">{element.label}</div>
+                                                    <div className="timer-value">{element.placeholder}</div>
+                                                </div>
+                                            )}
+                                            
+                                            {element.type === 'link' && (
+                                                <div className="link-container">
+                                                    <span className="link-text">{element.label}</span>
+                                                </div>
+                                            )}
+                                            
+                                            {element.type === 'result' && (
+                                                <div className="result-container">
+                                                    <span className="result-label">{element.label}</span>
+                                                    <span className="result-value">{element.placeholder}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <button 
+                                    onClick={handleNextScreen}
+                                    className={`action-button ${currentScreen === 0 && !allRequiredChecked ? 'disabled' : 'enabled'}`}
+                                >
+                                    {currentScreenData.button}
+                                </button>
+                                
+                                <div className="home-indicator">
+                                    <div className="home-indicator-bar"></div>
+                                </div>
+                            </div>
+                            
+                            {currentScreen === 0 && !allRequiredChecked && (
+                                <div className="required-notice">
+                                    필수 항목에 동의해야 다음으로 넘어갈 수 있습니다
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Right Panel - Legal References */}
+                        <div className="right-panel">
+                            <div className="panel-label">법적 근거</div>
+                            
+                            {violations.length > 0 && (
+                                <div className="violation-alert">
+                                    <div className="violation-header">
+                                        <span className="violation-icon">⚠</span>
+                                        <span className="violation-title">위법사항 경고</span>
+                                    </div>
+                                    {violations.map((violation, idx) => (
+                                        <div key={idx} className="violation-item">
+                                            <strong>{violation.title}:</strong> {violation.violationText}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                            
+                            <div className="law-cards">
+                                {currentLaws.map((lawId) => {
+                                    const law = laws[lawId];
+                                    const isHighlighted = highlightedLaw && highlightedLaw.includes(lawId);
+                                    
+                                    return (
+                                        <div
+                                            key={lawId}
+                                            ref={el => lawRefs.current[lawId] = el}
+                                            className={`law-card ${isHighlighted ? 'highlighted' : ''}`}
+                                        >
+                                            <div className="law-card-header">
+                                                <div>
+                                                    <h3 className="law-title">{law.title}</h3>
+                                                    <p className="law-subtitle">{law.subtitle}</p>
+                                                </div>
+                                                {isHighlighted && (
+                                                    <span className="law-badge">적용</span>
+                                                )}
+                                            </div>
+                                            
+                                            <p className="law-description">{law.description}</p>
+                                            
+                                            <div className="law-checkpoints">
+                                                <div className="checkpoints-title">검증 체크포인트</div>
+                                                {law.checkpoints.map((checkpoint, idx) => (
+                                                    <div key={idx} className="checkpoint-item">
+                                                        <span className="checkpoint-icon">✓</span>
+                                                        <span className="checkpoint-text">{checkpoint}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Footer */}
+                    <div className="footer">
+                        앱 화면의 요소를 클릭하면 해당 법적 근거가 하이라이트되고 자동 스크롤됩니다
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<ComplianceFlowPortfolio />);
+    </script>
+</body>
+</html>
